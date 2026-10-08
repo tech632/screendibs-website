@@ -340,13 +340,6 @@ html.is-nav-dark .site-nav .btn:hover {
   fill: rgba(17, 17, 17, 0.16);
 }
 
-.bk-gutter {
-  fill: none;
-  stroke-width: 2;
-  stroke-linecap: round;
-  opacity: 0.5;
-}
-
 .bk-rules {
   fill: none;
   stroke-width: 2.4;
@@ -364,22 +357,18 @@ html.is-nav-dark .site-nav .btn:hover {
    not hold at these sizes. */
 .book-ink .bk-body { fill: var(--ink); }
 .book-ink .bk-letter { fill: var(--bone); }
-.book-ink .bk-gutter { stroke: var(--bone); }
 .book-ink .bk-rules { stroke: var(--bone); }
 
 .book-sage .bk-body { fill: var(--sage); }
 .book-sage .bk-letter { fill: var(--ink); }
-.book-sage .bk-gutter { stroke: var(--ink); }
 .book-sage .bk-rules { stroke: var(--ink); }
 
 .book-coral .bk-body { fill: var(--coral); }
 .book-coral .bk-letter { fill: var(--ink); }
-.book-coral .bk-gutter { stroke: var(--ink); }
 .book-coral .bk-rules { stroke: var(--ink); }
 
 .book-peri .bk-body { fill: var(--peri); }
 .book-peri .bk-letter { fill: var(--ink); }
-.book-peri .bk-gutter { stroke: var(--ink); }
 .book-peri .bk-rules { stroke: var(--ink); }
 
 @keyframes book-dip {
@@ -501,6 +490,23 @@ main {
 
 .section-dusk .section-lede {
   color: rgba(245, 245, 245, 0.74);
+}
+
+/* The Sd* Team subhead above the founding story. Peri for the asterisk, as
+   for the index — coral sinks into the ember end of the gradient. */
+.who-team {
+  margin: 0 0 14px;
+  font-size: clamp(18px, 1.6vw, 22px);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.who-team span {
+  color: var(--peri);
+}
+
+.section-lede.who-para {
+  margin-bottom: 1em;
 }
 
 .section-dusk .btn-ghost {

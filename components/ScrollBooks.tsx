@@ -42,12 +42,14 @@ const BLOCK_OFFSET = 4;
 const VIEW_H = BOT_TROUGH + BLOCK_OFFSET + 6;
 const MID_L = (EDGE_X + GUTTER_X) / 2;
 const MID_R = (GUTTER_X + RIGHT_X) / 2;
-const LETTER_Y = 28.3;
+/** Letters sit on the gutter, mid-spread, so the word runs straight down the
+    centre line of the stack. */
+const LETTER_X = GUTTER_X;
+const LETTER_Y = (TOP_TROUGH + BOT_TROUGH) / 2;
 
 const SPREAD = `M${EDGE_X} ${EDGE_TOP_Y} Q${GUTTER_X} ${TOP_CTRL} ${RIGHT_X} ${EDGE_TOP_Y} L${RIGHT_X} ${EDGE_BOT_Y} Q${GUTTER_X} ${BOT_CTRL} ${EDGE_X} ${EDGE_BOT_Y} Z`;
 const PAGE_L = `M${EDGE_X} ${EDGE_TOP_Y} Q${MID_L} ${TOP_TROUGH} ${GUTTER_X} ${TOP_TROUGH} L${GUTTER_X} ${BOT_TROUGH} Q${MID_L} ${BOT_TROUGH} ${EDGE_X} ${EDGE_BOT_Y} Z`;
 const PAGE_R = `M${GUTTER_X} ${TOP_TROUGH} Q${MID_R} ${TOP_TROUGH} ${RIGHT_X} ${EDGE_TOP_Y} L${RIGHT_X} ${EDGE_BOT_Y} Q${MID_R} ${BOT_TROUGH} ${GUTTER_X} ${BOT_TROUGH} Z`;
-const GUTTER_LINE = `M${GUTTER_X} ${TOP_TROUGH} V${BOT_TROUGH}`;
 const RULES = "M87 28.3 L131 21.7 M87 33.9 L131 27.3 M87 39.5 L131 32.9";
 
 /** Widest volume, in px, and the ratio each next one shrinks by — a faster
@@ -83,13 +85,12 @@ export default function ScrollBooks() {
                   same light. Without this the spread reads as one curved slab. */}
               <path className="bk-hi" d={PAGE_L} />
               <path className="bk-shade" d={PAGE_R} />
-              <path className="bk-gutter" d={GUTTER_LINE} />
-              {/* Ruled lines on the far page: the letter is the recto, this is
-                  the verso, and together they read as a book being read. */}
+              {/* Ruled lines on the far page, so the spread reads as a book
+                  being read. */}
               <path className="bk-rules" d={RULES} />
               <text
                 className="bk-letter"
-                x={MID_L}
+                x={LETTER_X}
                 y={LETTER_Y}
                 textAnchor="middle"
                 dominantBaseline="central"

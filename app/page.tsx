@@ -34,15 +34,15 @@ const PILLARS = [
 const STEPS = [
   {
     title: "Search",
-    body: "Describe your concept or treatment in natural language. Our AI engine identifies semantically matching stories and literary properties.",
+    body: "Describe your concept or treatment in natural language and our AI engine will identify and match it with curated literary properties.",
   },
   {
     title: "Inform",
-    body: "Verify public domain status or locate contact info for copyright owners and representatives in seconds.",
+    body: "Verify IP adaptation rights status, including public domain and locate contact information for rights holders and representatives.",
   },
   {
     title: "Report",
-    body: "Export investor-ready IP due-diligence reports detailing rights, chain-of-title, and comparable market analytics.",
+    body: "Export in-depth investor-ready IP reports detailing the property, the adaptation rights, chain-of-title, and comparable market analytics.",
   },
 ];
 
@@ -202,7 +202,7 @@ export default function Page() {
             <div className="split-main">
               <div className="section-head">
                 <span className="section-index">01 — What</span>
-                <h2>Curating source IP rights for Adaptations.</h2>
+                <h2>We source and surface curated IP rights for Adaptations.</h2>
               </div>
               {/* VERBATIM */}
               <p className="section-lede">
@@ -238,7 +238,7 @@ export default function Page() {
             <div className="split-main">
               <div className="section-head">
                 <span className="section-index">02 — How</span>
-                <h2>Search, inform, report.</h2>
+                <h2>Our Process.</h2>
               </div>
               <ol className="steps">
                 {STEPS.map((step, i) => (
@@ -266,9 +266,20 @@ export default function Page() {
               <FactsTicker heading="A few things about IP, while you're here." facts={IP_FACTS} />
             </div>
             <div className="split-main">
+              <h3 className="who-team">
+                Sd<span aria-hidden>*</span> Team
+              </h3>
+              <p className="section-lede who-para">
+                In 2021, our founder secured a book-to-screen IP adaptation rights deal with a major Hollywood studio.
+                He then decided to reinvent the process, by making this information more accessible with next generation technology.
+                Screendibs is a 21st century company with a team of film, software and legal professionals who seek to solve the
+                persistent disconnect between valuable literary properties and those who are searching for them. We provide the
+                solutions that make quality literary IP discoverable and optioning straightforward.
+              </p>
               <p className="section-lede">
-                Screendibs Technologies Inc. was founded in Mont-Royal, Quebec, in 2021 by Montreal film and fiction professionals.
-                We believe that the best film, television, and gaming adaptations start with discovering the right story and connecting with the right people.
+                Working from Montreal and France, our multidisciplinary team brings together decades of experience in film
+                development, rights, semantic search technology, and interface design to help customers find and adapt the stories
+                of tomorrow — today.
               </p>
               <Link className="btn btn-ghost" href="/team">
                 Meet the team

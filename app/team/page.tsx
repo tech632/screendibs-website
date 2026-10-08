@@ -145,7 +145,7 @@ export default function TeamPage() {
         ))}
       </div>
 
-      <ContactBlock heading="Want to join them?" note="We hire slowly and read everything." />
+      <ContactBlock heading="Want to join them?" />
     </main>
   );
 }
