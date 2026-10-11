@@ -21,21 +21,34 @@
   --bone: #f5f5f5;
   --night: #0b0b0c;
 
-  /* The page's downward dégradé: cream at the top, walking through the
-     brand hues, darkening a step per section, landing on --night by the
-     contact band and staying there for everything under it. */
-  --dusk-sage: #b4c795;
-  --dusk-ember: #7c2d20;
-  --dusk-indigo: #263668;
+  /* Sections are flat, full-bleed bands that alternate: --cream (the base),
+     --cream-deep (the tinted neutral), and --night for the dark ones. */
 
   --rule: rgba(17, 17, 17, 0.14);
   --rule-soft: rgba(17, 17, 17, 0.08);
 
-  --font-display: "Helvetica Neue", Helvetica, Arial, "Liberation Sans",
-    "Segoe UI", sans-serif;
+  /* One family site-wide: Inter Tight (loaded in layout.tsx). The mark is
+     NOT set in this — rig.ts and SdMark carry their own Helvetica stack. */
+  --font-sans: var(--font-inter-tight), "Helvetica Neue", Helvetica, Arial,
+    "Liberation Sans", "Segoe UI", sans-serif;
+  --font-display: var(--font-sans);
+
+  /* Type scale, from a 1440px reference. */
+  --fs-display: clamp(52px, 8.7vw, 125px); /* hero h1, section h2 */
+  --fs-h3: clamp(32px, 3.6vw, 52px); /* section h3 */
+  --fs-statement: clamp(30px, 3.8vw, 55px); /* the big paragraph */
+  --fs-item: clamp(22px, 1.95vw, 28px); /* card / item titles */
+  --fs-body: clamp(17px, 1.4vw, 20px);
+  --fs-label: clamp(16px, 1.4vw, 20px);
+
+  /* Vertical rhythm of a band. */
+  --band-pad: clamp(80px, 12vw, 180px);
 
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
-  --gutter: clamp(20px, 5vw, 72px);
+  --gutter: clamp(20px, 5.5vw, 80px);
+  /* The nav row keeps the old inset: rig.ts hard-codes it (5vw, 20–72px) to
+     seat the canvas-drawn mark, so it must not follow --gutter. */
+  --nav-gutter: clamp(20px, 5vw, 72px);
   --nav-h: clamp(64px, 8vw, 86px);
 }
 
@@ -64,7 +77,8 @@ html.is-intro body {
 }
 
 body {
-  font-family: var(--font-display);
+  font-family: var(--font-sans);
+  font-weight: 400;
   color: var(--ink);
   background: var(--cream);
   -webkit-font-smoothing: antialiased;
@@ -102,11 +116,11 @@ a {
   align-items: center;
   justify-content: space-between;
   height: var(--nav-h);
-  padding: 0 var(--gutter);
+  padding: 0 var(--nav-gutter);
   transition: opacity 0.9s var(--ease), transform 0.9s var(--ease);
 }
 
-/* Held back while the mark is still being forged. */
+/* Held back until the mark has been seared in. */
 html.is-intro .site-nav {
   opacity: 0;
   transform: translateY(-10px);
@@ -239,10 +253,11 @@ html.is-nav-dark .site-nav .btn:hover {
   z-index: 0;
 }
 
-/* The mark, once it leaves the hero. Fixed, transparent, above the page — and
-   above the nav too, since it parks inside the nav row and would otherwise
-   land behind the nav's own backdrop. Click-through, so the hit area beneath
-   it still works. */
+/* The mark, once the intro is over. It was seared at its final spot in the nav
+   row; from then on this fixed, transparent canvas holds it there above the
+   page — and above the nav too, since it sits inside the nav row and would
+   otherwise land behind the nav's own backdrop. Click-through, so the hit area
+   beneath it still works. */
 .mark-canvas {
   position: fixed;
   inset: 0;
@@ -255,16 +270,15 @@ html.is-nav-dark .site-nav .btn:hover {
 
 .seq-skip {
   position: absolute;
-  right: var(--gutter);
-  bottom: calc(var(--gutter) * 0.9);
+  right: var(--nav-gutter);
+  bottom: calc(var(--nav-gutter) * 0.9);
   z-index: 4;
   appearance: none;
   border: 0;
   background: none;
   font: inherit;
-  font-size: 11px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
+  font-size: 14px;
+  letter-spacing: -0.005em;
   color: rgba(245, 245, 245, 0.42);
   cursor: pointer;
   opacity: 0;
@@ -279,6 +293,44 @@ html.is-nav-dark .site-nav .btn:hover {
 
 .seq-skip:hover {
   color: rgba(245, 245, 245, 0.85);
+}
+
+/* --- hero headline: flush left, low in the stage, held back until the intro
+   has revealed it --- */
+
+/* Outer wrapper carries the scroll-driven fade (like .hero-cue) so it cannot
+   fight the reveal transition on the heading itself. */
+.hero-copy {
+  position: absolute;
+  left: var(--gutter);
+  right: var(--gutter);
+  bottom: clamp(190px, 31vh, 300px);
+  z-index: 2;
+  opacity: var(--hero-fade, 1);
+  pointer-events: none;
+}
+
+.hero-copy h1 {
+  margin: 0;
+  max-width: 9em;
+  font-size: var(--fs-display);
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.9s var(--ease), transform 0.9s var(--ease);
+}
+
+.hero.is-revealed .hero-copy h1 {
+  opacity: 1;
+  transform: none;
+  transition-delay: 200ms;
+}
+
+@media (max-height: 620px) {
+  .hero-copy { bottom: 24px; }
 }
 
 /* --- scroll cue: a shelf of books spelling SCROLL --- */
@@ -382,21 +434,43 @@ html.is-nav-dark .site-nav .btn:hover {
 
 /* -------------------------------------------------------------- typography --- */
 
-.eyebrow {
-  margin: 0 0 10px;
-  font-size: 11px;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--ink-soft);
+/* One family, three weights: 300 for display, 400 for running type, 700 for
+   item titles. Sentence case throughout — nothing is uppercased or tracked
+   out. A label is just a small line of ordinary text above its heading. */
+
+.eyebrow,
+.section-index {
+  margin: 0 0 clamp(20px, 2.2vw, 32px);
+  font-size: var(--fs-label);
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--ink);
 }
 
 .lede {
   margin: 0;
-  max-width: 40ch;
-  font-size: clamp(14px, 1.05vw, 15px);
-  line-height: 1.5;
-  letter-spacing: -0.008em;
+  max-width: 34em;
+  font-size: var(--fs-body);
+  line-height: 1.3;
+  letter-spacing: -0.01em;
   color: var(--ink-soft);
+}
+
+/* The statement: a large, light-weight paragraph under a small label. One key
+   phrase can be picked out in an accent via .accent. */
+.statement {
+  margin: 0;
+  max-width: 1200px;
+  font-size: var(--fs-statement);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+.accent {
+  color: var(--coral-deep);
 }
 
 /* ---------------------------------------------------------------- buttons --- */
@@ -405,12 +479,14 @@ html.is-nav-dark .site-nav .btn:hover {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 13px 22px;
+  padding: 14px 24px;
   border-radius: 999px;
   background: var(--ink);
   color: var(--bone);
-  font-size: 14px;
-  letter-spacing: -0.006em;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: -0.01em;
   border: 1px solid var(--ink);
   cursor: pointer;
   transition: transform 0.3s var(--ease), background-color 0.3s ease,
@@ -426,7 +502,7 @@ html.is-nav-dark .site-nav .btn:hover {
 
 .btn-sm {
   padding: 9px 17px;
-  font-size: 13px;
+  font-size: 14px;
 }
 
 .btn-ghost {
@@ -464,40 +540,67 @@ main {
   padding-top: calc(var(--nav-h) + clamp(28px, 6vw, 80px));
 }
 
+/* Sections are full-bleed bands with hard edges: no rules between them, just
+   a flat change of ground. .band-deep is the tinted neutral, .band-night the
+   dark one; a section with neither sits on the base cream. */
 .section {
-  padding: clamp(64px, 9vw, 132px) var(--gutter);
-  border-top: 1px solid var(--rule-soft);
+  padding: var(--band-pad) var(--gutter);
 }
 
-.section-band {
-  background: linear-gradient(to bottom, var(--cream), var(--dusk-sage));
+.band-deep {
+  background: var(--cream-deep);
 }
 
-/* The "Who" section: the gradient has walked past sage into an ember-dark
-   coral by the time it reaches here, so type flips to light for the rest of
-   the page. */
-.section-dusk {
-  background: linear-gradient(to bottom, var(--dusk-sage), var(--dusk-ember));
+.band-night {
+  background: var(--night);
   color: var(--bone);
-  border-top: 0;
 }
 
-/* Not sage — the gradient itself is sage-toned at the top of this section,
-   so sage text there would vanish into its own background. */
-.section-dusk .section-index {
-  color: var(--peri);
+.band-night .section-index {
+  color: var(--bone);
 }
 
-.section-dusk .section-lede {
+/* Flush left, headline first: the label sits over the display heading. */
+.section-head {
+  margin-bottom: clamp(48px, 7vw, 104px);
+}
+
+.section h2,
+.display {
+  margin: 0;
+  font-size: var(--fs-display);
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+.section h2.statement {
+  max-width: 1200px;
+  font-size: var(--fs-statement);
+  font-weight: 400;
+  line-height: 1.05;
+}
+
+.section-lede {
+  margin: 0 0 clamp(32px, 4vw, 56px);
+  max-width: 34em;
+  font-size: var(--fs-body);
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  color: var(--ink-soft);
+}
+
+.band-night .section-lede {
   color: rgba(245, 245, 245, 0.74);
 }
 
-/* The Sd* Team subhead above the founding story. Peri for the asterisk, as
-   for the index — coral sinks into the ember end of the gradient. */
+/* The Sd* Team subhead above the founding story. */
 .who-team {
-  margin: 0 0 14px;
-  font-size: clamp(18px, 1.6vw, 22px);
-  font-weight: 600;
+  margin: 0 0 clamp(16px, 2vw, 28px);
+  font-size: var(--fs-item);
+  font-weight: 700;
+  line-height: 1;
   letter-spacing: -0.02em;
 }
 
@@ -505,90 +608,53 @@ main {
   color: var(--peri);
 }
 
+.band-night .accent {
+  color: var(--peri);
+}
+
 .section-lede.who-para {
   margin-bottom: 1em;
 }
 
-.section-dusk .btn-ghost {
+.band-night .btn-ghost {
   color: var(--bone);
   border-color: rgba(245, 245, 245, 0.3);
 }
 
-.section-dusk .btn-ghost:hover {
+.band-night .btn-ghost:hover {
   background: transparent;
   border-color: var(--bone);
   color: var(--bone);
 }
 
-.section-head {
-  display: flex;
-  gap: clamp(16px, 4vw, 64px);
-  align-items: baseline;
-  flex-wrap: wrap;
-  margin-bottom: clamp(28px, 4vw, 52px);
-}
-
-.section-index {
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--ink);
-  min-width: 8ch;
-  margin: 0;
-}
-
-.section h2 {
-  margin: 0;
-  max-width: 20ch;
-  font-size: clamp(26px, 3.4vw, 44px);
-  line-height: 1.02;
-  letter-spacing: -0.032em;
-  font-weight: 500;
-}
-
-.section-lede {
-  margin: 0 0 clamp(32px, 5vw, 60px);
-  max-width: 58ch;
-  font-size: clamp(15px, 1.3vw, 18px);
-  line-height: 1.5;
-  color: var(--ink-soft);
-}
-
+/* Items stack in the narrow copy column, bare: a bold, tight title over body
+   text, with only the asterisk carrying colour. */
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: clamp(20px, 2.6vw, 40px);
+  gap: clamp(32px, 4vw, 56px);
 }
 
-.card {
-  padding: clamp(20px, 2.4vw, 30px);
-  border-radius: 3px;
-  border-top: 3px solid var(--ink);
-  background: rgba(255, 255, 255, 0.28);
+.card h3,
+.steps h3 {
+  margin: 0 0 12px;
+  font-size: var(--fs-item);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.02em;
 }
 
-.card-sage { border-top-color: var(--sage); }
-.card-coral { border-top-color: var(--coral); }
-.card-peri { border-top-color: var(--peri); }
-
-.card h3 {
-  margin: 0 0 10px;
-  font-size: 17px;
-  letter-spacing: -0.018em;
-  font-weight: 500;
-}
-
-.card p {
+.card p,
+.steps p {
   margin: 0;
-  font-size: 15px;
-  line-height: 1.55;
+  font-size: var(--fs-body);
+  line-height: 1.3;
+  letter-spacing: -0.01em;
   color: var(--ink-soft);
 }
 
 .card-ast {
   display: block;
-  font-size: 20px;
+  font-size: 28px;
   line-height: 1;
   margin-bottom: 14px;
 }
@@ -601,63 +667,38 @@ main {
 
 .steps {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: clamp(20px, 2.6vw, 44px);
+  gap: clamp(32px, 4vw, 56px);
   margin: 0;
   padding: 0;
   list-style: none;
-  counter-reset: step;
-}
-
-.steps li {
-  padding-top: 18px;
-  border-top: 1px solid var(--rule);
 }
 
 .step-n {
-  font-size: 11px;
-  letter-spacing: 0.22em;
+  display: block;
+  margin-bottom: 14px;
+  font-size: var(--fs-label);
+  letter-spacing: -0.01em;
   color: var(--coral-deep);
-}
-
-.steps h3 {
-  margin: 10px 0 8px;
-  font-size: 17px;
-  font-weight: 500;
-  letter-spacing: -0.018em;
-}
-
-.steps p {
-  margin: 0;
-  font-size: 15px;
-  line-height: 1.55;
-  color: var(--ink-soft);
 }
 
 /* ------------------------------------------------------------ split layout --- */
 
-/* The three "narrative" sections each pair their text with a rotating demo
-   panel, alternating which side it sits on — right, left, then centred for
-   Who — so the page doesn't read as three repeats of the same layout. */
+/* Two columns with a lot of air between them: a narrow copy column and a
+   narrow demo panel, pushed to opposite edges. The copy and the panel swap
+   sides from one section to the next. */
 .section-split {
   display: grid;
-  gap: clamp(28px, 4vw, 64px);
+  gap: clamp(40px, 6vw, 96px);
   align-items: start;
+  justify-content: space-between;
 }
 
 .section-split.split-right {
-  grid-template-columns: minmax(0, 1fr) minmax(260px, 340px);
+  grid-template-columns: minmax(0, 640px) minmax(260px, 400px);
 }
 
 .section-split.split-left {
-  grid-template-columns: minmax(260px, 340px) minmax(0, 1fr);
-}
-
-/* Who: the panel sits dead centre with text flanking it on both sides,
-   rather than pinned to an edge — the third position, after What's right
-   and How's left. */
-.section-split.split-center {
-  grid-template-columns: minmax(0, 1fr) minmax(260px, 340px) minmax(0, 1fr);
+  grid-template-columns: minmax(260px, 400px) minmax(0, 640px);
 }
 
 .split-main {
@@ -671,9 +712,8 @@ main {
 
 @media (max-width: 860px) {
   .section-split.split-right,
-  .section-split.split-left,
-  .section-split.split-center {
-    grid-template-columns: 1fr;
+  .section-split.split-left {
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 
@@ -735,9 +775,8 @@ main {
 
 .search-chrome-label {
   margin-left: 6px;
-  font-size: 10px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
+  font-size: 13px;
+  letter-spacing: -0.005em;
   color: var(--ink-soft);
   opacity: 0.65;
 }
@@ -789,7 +828,7 @@ main {
   align-items: center;
   gap: 8px;
   font-size: 13px;
-  letter-spacing: 0.02em;
+  letter-spacing: -0.005em;
   color: var(--ink-soft);
 }
 
@@ -822,9 +861,8 @@ main {
   display: flex;
   align-items: center;
   gap: 5px;
-  font-size: 11px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
+  font-size: 13px;
+  letter-spacing: -0.005em;
   color: var(--coral-deep);
   margin-bottom: 4px;
 }
@@ -871,13 +909,13 @@ main {
 
 /* ----------------------------------------------------------- facts ticker --- */
 
-/* Sits on .section-dusk, so it is styled for a dark ground from the start —
+/* Sits on .band-night, so it is styled for a dark ground from the start —
    the same self-contained card language as the search widgets, in the dark
    palette this section already committed to. */
 .facts-heading {
   margin: 0 0 14px;
-  font-size: 12px;
-  letter-spacing: 0.08em;
+  font-size: 15px;
+  letter-spacing: -0.005em;
   color: rgba(245, 245, 245, 0.6);
 }
 
@@ -914,17 +952,15 @@ main {
 
 .facts-chrome-label {
   margin-left: 6px;
-  font-size: 10px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
+  font-size: 13px;
+  letter-spacing: -0.005em;
   color: rgba(245, 245, 245, 0.6);
 }
 
 .facts-count {
   margin-left: auto;
-  font-size: 10px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
+  font-size: 13px;
+  letter-spacing: -0.005em;
   color: var(--peri);
 }
 
@@ -977,7 +1013,7 @@ main {
 
 .facts-item strong {
   color: var(--bone);
-  font-weight: 500;
+  font-weight: 700;
 }
 
 .facts-static {
@@ -996,28 +1032,22 @@ main {
 
 .facts-static strong {
   color: var(--bone);
-  font-weight: 500;
+  font-weight: 700;
 }
 
 /* ---------------------------------------------------------------- clients --- */
 
 /* "Our customers include …" — the company's segments, one chip each. Sits
-   under the Who split at full width, so nine chips wrap into a couple of rows
-   rather than stacking into a tower inside a narrow column. Sage, not peri,
-   for the label: by the bottom of Who the gradient has reached ember, and
-   sage holds up on it where peri goes muddy. */
+   under the Who split at full width, so the chips wrap into a couple of rows
+   rather than stacking into a tower inside a narrow column. */
 .clients {
-  margin-top: clamp(36px, 5vw, 64px);
-  padding-top: clamp(20px, 2.6vw, 32px);
-  border-top: 1px solid rgba(245, 245, 245, 0.16);
+  margin-top: clamp(64px, 9vw, 128px);
 }
 
 .clients-label {
-  margin: 0 0 14px;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
+  margin: 0 0 18px;
+  font-size: var(--fs-label);
+  letter-spacing: -0.01em;
   color: var(--sage);
 }
 
@@ -1031,11 +1061,12 @@ main {
 }
 
 .clients-list li {
-  padding: 7px 14px;
+  padding: 8px 16px;
   border: 1px solid rgba(245, 245, 245, 0.3);
   border-radius: 999px;
-  font-size: 13px;
+  font-size: 16px;
   line-height: 1.2;
+  letter-spacing: -0.01em;
   color: var(--bone);
 }
 
@@ -1048,34 +1079,28 @@ main {
 
 /* ------------------------------------------------------------------ pitch --- */
 
-/* Two segment-specific pitches — independents, enterprise — on a flat band of
-   the ember that Who lands on and the contact block picks up, so the page's
-   dégradé pauses here rather than restarting. */
-.section-pitch {
-  background: var(--dusk-ember);
-  color: var(--bone);
-  border-top: 0;
-}
-
-.section-pitch .section-index {
-  color: var(--sage);
-}
-
+/* Two segment-specific pitches — independents, enterprise — side by side in
+   narrow columns on a base band. */
 .pitch-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: clamp(20px, 2.6vw, 40px);
+  grid-template-columns: repeat(2, minmax(0, 560px));
+  justify-content: space-between;
+  gap: clamp(48px, 6vw, 96px);
+}
+
+@media (max-width: 860px) {
+  .pitch-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
 
 .pitch {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 14px;
-  padding: clamp(24px, 3vw, 40px);
-  border-radius: 3px;
-  border-top: 3px solid var(--bone);
-  background: rgba(245, 245, 245, 0.06);
+  gap: clamp(18px, 2vw, 28px);
+  padding-top: clamp(20px, 2vw, 28px);
+  border-top: 3px solid var(--ink);
 }
 
 .pitch-coral { border-top-color: var(--coral); }
@@ -1083,11 +1108,10 @@ main {
 
 .pitch h3 {
   margin: 0;
-  max-width: 22ch;
-  font-size: clamp(22px, 2.4vw, 32px);
-  line-height: 1.08;
-  letter-spacing: -0.028em;
-  font-weight: 500;
+  font-size: var(--fs-h3);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
 }
 
 /* Grows to fill, so the two buttons sit level even when one pitch runs
@@ -1095,38 +1119,18 @@ main {
 .pitch p {
   flex: 1;
   margin: 0;
-  max-width: 44ch;
-  font-size: clamp(15px, 1.2vw, 17px);
-  line-height: 1.5;
-  color: rgba(245, 245, 245, 0.74);
-}
-
-.pitch .btn {
-  margin-top: 6px;
+  max-width: 28em;
+  font-size: var(--fs-body);
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  color: var(--ink-soft);
 }
 
 /* ---------------------------------------------------------------- contact --- */
 
-.section-contact {
-  /* Picks up the ember the "Who" section left off at, passes through a
-     periwinkle-dark indigo, then settles fully black well before the
-     bottom so the form always sits on solid --night. */
-  background: linear-gradient(
-    to bottom,
-    var(--dusk-ember),
-    var(--dusk-indigo) 42%,
-    var(--night) 75%
-  );
-  color: var(--bone);
-  border-top: 0;
-}
-
+/* The dark band the page lands on; the footer continues it. */
 .section-contact h2 {
-  max-width: 22ch;
-}
-
-.section-contact .section-index {
-  color: var(--sage);
+  max-width: 12em;
 }
 
 .access {
@@ -1140,12 +1144,12 @@ main {
 .access input {
   flex: 1 1 260px;
   min-width: 0;
-  padding: 13px 18px;
+  padding: 14px 20px;
   border-radius: 999px;
   border: 1px solid rgba(245, 245, 245, 0.28);
   background: transparent;
   font: inherit;
-  font-size: 15px;
+  font-size: 17px;
   color: var(--bone);
   outline: none;
   transition: border-color 0.25s ease;
@@ -1160,8 +1164,9 @@ main {
 }
 
 .note {
-  margin: 14px 0 0;
-  font-size: 12px;
+  margin: 18px 0 0;
+  font-size: 15px;
+  letter-spacing: -0.005em;
   color: inherit;
   opacity: 0.62;
 }
@@ -1177,170 +1182,119 @@ main {
 /* ------------------------------------------------------------------- team --- */
 
 .team-top {
-  padding: 0 var(--gutter) clamp(48px, 7vw, 96px);
-  text-align: center;
+  padding: 0 var(--gutter) var(--band-pad);
 }
 
 .team-top h1 {
-  margin: 0 auto clamp(28px, 4vw, 52px);
-  max-width: 14ch;
-  font-size: clamp(38px, 6.4vw, 92px);
-  line-height: 0.94;
-  letter-spacing: -0.04em;
-  font-weight: 500;
+  margin: 0 0 clamp(48px, 7vw, 104px);
+  font-size: var(--fs-display);
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -0.02em;
 }
 
-/* The masthead: one heading, two columns of running text beneath it. */
-.team-top-cols {
+/* The masthead: one heading, a row of figures beneath it, flush left. */
+.team-stats {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 300px));
+  justify-content: space-between;
   gap: clamp(20px, 5vw, 88px);
-  max-width: 1080px;
-  margin: 0 auto;
-  text-align: left;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
-.team-top-cols p {
-  margin: 0;
-  font-size: clamp(14px, 1.15vw, 16px);
-  line-height: 1.6;
+.team-stats li {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.team-stats svg {
+  width: 28px;
+  height: 28px;
+  fill: none;
+  stroke: var(--coral-deep);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.team-stats strong {
+  font-size: var(--fs-h3);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  font-weight: 300;
+}
+
+.team-stats span {
+  max-width: 16em;
+  font-size: var(--fs-body);
+  line-height: 1.3;
+  letter-spacing: -0.01em;
   color: var(--ink-soft);
 }
 
 @media (max-width: 720px) {
-  .team-top-cols {
-    grid-template-columns: 1fr;
-    gap: 18px;
+  .team-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 36px 20px;
+  }
+  .team-stats li:last-child {
+    grid-column: 1 / -1;
   }
 }
 
 /*
- * A 3x3 grid, one row a person. The photograph sits on the diagonal — column
- * one, then two, then three — and the two cells it leaves behind in each row
- * are, reading left to right, always the bio and then the quote.
- *
- * Written the small width up, and each breakpoint places every cell itself,
- * because the diagonal rules have to carry the .pic-N class to tell the rows
- * apart: a narrow-width override written as .team-row .portrait-slot is a
- * class less specific and would lose to them however late it came.
+ * One band a person, alternating between the tinted neutral and the base. The
+ * name runs full width over a narrow bio column and a narrow quote column,
+ * pushed to opposite edges; a single column below 781px, bio first and the
+ * quote pulled from it underneath.
  */
-.team-grid {
-  max-width: 1240px;
-  margin: 0 auto;
-  padding: 0 var(--gutter);
-}
-
-/* One column: the photograph leads, then the bio, then the quote pulled from
-   it. Walking the photograph across is meaningless here, and placing it second
-   would put a bio above its own sitter. */
 .team-row {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: clamp(20px, 2.6vw, 44px);
-  /* Not stretch: the short cells have to be free to move for the sticky
-     further down to have anywhere to go. */
+  /* Not stretch: the quote has to be free to move for the sticky further down
+     to have anywhere to go. */
   align-items: start;
-  padding: clamp(30px, 4vw, 64px) 0;
-  border-top: 1px solid var(--rule-soft);
+  padding: var(--band-pad) var(--gutter);
 }
 
-.portrait {
-  position: relative;
-  /* Driven by the cell it sits in rather than the viewport, so it stays a
-     portrait at every width. */
-  aspect-ratio: 4 / 5;
-  overflow: hidden;
+.team-row:nth-child(odd) {
   background: var(--cream-deep);
 }
 
-/*
- * Two columns. A third of a viewport this narrow puts the bio under about 22
- * characters a line, which is unreadable, so the diagonal cannot survive the
- * drop: the photograph holds the left column for everyone and the quote falls
- * in under the bio it was pulled from.
- */
-@media (min-width: 781px) {
-  .team-row {
-    grid-template-columns: minmax(190px, 300px) minmax(0, 1fr);
-  }
-  .team-row .portrait-slot {
-    grid-column: 1;
-    grid-row: 1 / span 2;
-  }
-  .team-row .team-body {
-    grid-column: 2;
-    grid-row: 1;
-  }
-  .team-row .team-quote {
-    grid-column: 2;
-    grid-row: 2;
-  }
-  .portrait {
-    aspect-ratio: 3 / 4;
-  }
+.team-head {
+  margin-bottom: clamp(16px, 3vw, 48px);
 }
 
-/* Three columns, and the diagonal proper. */
-@media (min-width: 1101px) {
+.team-head h2 {
+  margin: 0;
+  font-size: var(--fs-display);
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+@media (min-width: 781px) {
   .team-row {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: minmax(0, 640px) minmax(0, 420px);
+    justify-content: space-between;
+    column-gap: clamp(40px, 6vw, 112px);
   }
 
-  /* Undo the two-column stack: back onto one row, three cells across. */
-  .team-row .portrait-slot,
-  .team-row .team-body,
-  .team-row .team-quote {
-    grid-row: 1;
+  .team-head {
+    grid-column: 1 / -1;
   }
 
-  .team-row.pic-1 .portrait-slot { grid-column: 1; }
-  .team-row.pic-1 .team-body     { grid-column: 2; }
-  .team-row.pic-1 .team-quote    { grid-column: 3; }
-
-  .team-row.pic-2 .team-body     { grid-column: 1; }
-  .team-row.pic-2 .portrait-slot { grid-column: 2; }
-  .team-row.pic-2 .team-quote    { grid-column: 3; }
-
-  .team-row.pic-3 .team-body     { grid-column: 1; }
-  .team-row.pic-3 .team-quote    { grid-column: 2; }
-  .team-row.pic-3 .portrait-slot { grid-column: 3; }
-
-  /* Whichever cell runs longest, the photograph and the quote ride down beside
-     it rather than sitting at the top of dead space, clearing the fixed nav. */
-  .team-row .portrait-slot,
+  /* The quote rides down beside a long bio rather than leaving dead space,
+     clearing the fixed nav. */
   .team-row .team-quote {
     position: sticky;
     top: calc(var(--nav-h) + clamp(16px, 2vw, 32px));
   }
-}
-
-.portrait-sage { background: var(--sage); }
-.portrait-coral { background: var(--coral); }
-.portrait-peri { background: var(--peri); }
-
-.portrait-placeholder {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--bone);
-}
-
-.portrait-initials {
-  font-size: clamp(48px, 6vw, 108px);
-  letter-spacing: -0.05em;
-  font-weight: 500;
-  opacity: 0.9;
-}
-
-.portrait-ast {
-  position: absolute;
-  right: clamp(14px, 1.6vw, 24px);
-  bottom: clamp(10px, 1.2vw, 18px);
-  font-size: clamp(20px, 2vw, 30px);
-  line-height: 1;
-  opacity: 0.9;
 }
 
 .team-body {
@@ -1348,25 +1302,18 @@ main {
   flex-direction: column;
 }
 
-.team-body h2 {
-  margin: 12px 0 6px;
-  font-size: clamp(26px, 2.6vw, 38px);
-  line-height: 1;
-  letter-spacing: -0.035em;
-  font-weight: 500;
-}
-
 .team-role {
-  margin: 0 0 clamp(16px, 2vw, 26px);
-  font-size: 14px;
-  letter-spacing: -0.005em;
+  margin: clamp(14px, 1.6vw, 24px) 0 0;
+  font-size: var(--fs-label);
+  letter-spacing: -0.01em;
   color: var(--coral-deep);
 }
 
 .team-bio {
   margin: 0 0 1.1em;
-  font-size: clamp(14px, 1.05vw, 16px);
-  line-height: 1.62;
+  font-size: var(--fs-body);
+  line-height: 1.3;
+  letter-spacing: -0.01em;
   color: var(--ink-soft);
 }
 
@@ -1375,7 +1322,7 @@ main {
 }
 
 /* The quote column. --accent is set by the row's tone, so each person's rule
-   matches the plate their portrait would have worn. */
+   carries their tone. */
 .team-quote {
   --accent: var(--coral-deep);
   padding-top: 6px;
@@ -1392,85 +1339,90 @@ main {
 
 .team-quote blockquote p {
   margin: clamp(16px, 2vw, 26px) 0 0;
-  font-size: clamp(19px, 1.55vw, 24px);
-  line-height: 1.32;
-  letter-spacing: -0.025em;
+  font-size: var(--fs-item);
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
   text-wrap: balance;
   color: var(--ink);
   quotes: "“" "”";
 }
 
+/* Multi-line verse: smaller, and no balancing so each line breaks where written. */
+.team-quote blockquote p.is-verse {
+  font-size: clamp(18px, 1.5vw, 22px);
+  text-wrap: pretty;
+}
+
 .team-quote blockquote p::before { content: open-quote; }
 .team-quote blockquote p::after { content: close-quote; }
 
-.team-aside {
-  margin: clamp(20px, 3vw, 34px) 0 0;
-  padding-top: 14px;
-  border-top: 1px solid var(--rule);
-  font-size: 12px;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+/* Citation line under the quote: author, book title. */
+.team-quote cite {
+  display: block;
+  margin: clamp(18px, 2.4vw, 30px) 0 0;
+  font-size: 16px;
+  font-style: normal;
+  letter-spacing: -0.01em;
   color: var(--ink-soft);
 }
 
 /* --------------------------------------------------------- contact page --- */
 
 .contact-top {
-  padding: 0 var(--gutter) clamp(36px, 5vw, 64px);
+  padding: 0 var(--gutter) var(--band-pad);
 }
 
 .contact-top h1 {
-  margin: 0 0 16px;
-  max-width: 14ch;
-  font-size: clamp(38px, 6.4vw, 92px);
-  line-height: 0.94;
-  letter-spacing: -0.04em;
-  font-weight: 500;
+  margin: 0 0 clamp(28px, 3.4vw, 48px);
+  font-size: var(--fs-display);
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -0.02em;
 }
 
 .contact-top .lede {
   display: block;
-  max-width: 48ch;
-  font-size: clamp(15px, 1.3vw, 18px);
+  max-width: 34em;
 }
 
 .contact-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
-  gap: clamp(28px, 5vw, 88px);
-  padding: clamp(40px, 6vw, 88px) var(--gutter) clamp(72px, 10vw, 140px);
-  border-top: 1px solid var(--rule-soft);
+  grid-template-columns: minmax(0, 560px) minmax(0, 420px);
+  justify-content: space-between;
+  gap: clamp(48px, 6vw, 96px);
+  padding: var(--band-pad) var(--gutter);
+  background: var(--cream-deep);
 }
 
 @media (max-width: 860px) {
   .contact-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 
 .field {
   display: flex;
   flex-direction: column;
-  gap: 7px;
-  margin-bottom: 20px;
+  gap: 8px;
+  margin-bottom: 24px;
 }
 
 .field label {
-  font-size: 11px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
+  font-size: 16px;
+  letter-spacing: -0.01em;
   color: var(--ink-soft);
 }
 
 .field input,
 .field textarea {
   width: 100%;
-  padding: 12px 14px;
+  padding: 14px 16px;
   border: 1px solid var(--rule);
   border-radius: 3px;
   background: rgba(255, 255, 255, 0.4);
   font: inherit;
-  font-size: 15px;
+  font-size: 17px;
   color: var(--ink);
   outline: none;
   resize: vertical;
@@ -1488,26 +1440,26 @@ main {
 }
 
 .contact-details {
-  margin: 0 0 clamp(28px, 4vw, 44px);
+  margin: 0 0 clamp(36px, 5vw, 64px);
 }
 
 .contact-details > div {
-  padding: 14px 0;
-  border-top: 1px solid var(--rule);
+  padding: 0 0 clamp(20px, 2vw, 28px);
 }
 
 .contact-details dt {
-  font-size: 11px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
+  font-size: 16px;
+  letter-spacing: -0.01em;
   color: var(--ink-soft);
-  margin-bottom: 5px;
+  margin-bottom: 6px;
 }
 
 .contact-details dd {
   margin: 0;
-  font-size: clamp(15px, 1.3vw, 18px);
-  letter-spacing: -0.015em;
+  font-size: var(--fs-item);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.02em;
 }
 
 .contact-details a:hover {
@@ -1522,16 +1474,18 @@ main {
 }
 
 .contact-card h2 {
-  margin: 0 0 8px;
-  font-size: 20px;
-  font-weight: 500;
+  margin: 0 0 10px;
+  font-size: var(--fs-item);
+  font-weight: 700;
+  line-height: 1;
   letter-spacing: -0.02em;
 }
 
 .contact-card p {
   margin: 0;
-  font-size: 15px;
-  line-height: 1.5;
+  font-size: var(--fs-body);
+  line-height: 1.3;
+  letter-spacing: -0.01em;
 }
 
 .contact-card .note {
@@ -1541,55 +1495,60 @@ main {
 
 /* ------------------------------------------------------------ about page --- */
 
-/* The company mission IS the masthead — no display title above it, so the
-   whole page starts a step higher. */
+/* The company mission IS the masthead: a small label over a statement. */
 .about-top {
-  padding: 0 var(--gutter) clamp(24px, 3.4vw, 44px);
+  padding: 0 var(--gutter) var(--band-pad);
 }
 
 .about-top h1 {
   margin: 0;
-  max-width: 44ch;
-  font-size: clamp(24px, 3vw, 42px);
-  line-height: 1.12;
-  letter-spacing: -0.028em;
-  font-weight: 500;
+  max-width: 1200px;
+  font-size: var(--fs-statement);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
   text-wrap: balance;
 }
 
-/* Mission, customers, and platform ride abreast as equal-height boxes in the
-   home page's card language — stretch is what keeps a short box even with a
-   long one. */
-.about-cols {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(20px, 2.6vw, 40px);
-  padding-top: clamp(32px, 4.6vw, 56px);
-}
-
+/* Mission, customers, and platform: three bands, each a heading beside a
+   narrow column of copy. */
 .about-col {
-  padding: clamp(20px, 2.4vw, 30px);
-  border-radius: 3px;
-  border-top: 3px solid var(--ink);
-  background: rgba(255, 255, 255, 0.28);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 560px);
+  justify-content: space-between;
+  column-gap: clamp(28px, 6vw, 96px);
+  align-items: start;
+  padding: var(--band-pad) var(--gutter);
 }
 
-.about-col.tone-sage { border-top-color: var(--sage); }
-.about-col.tone-coral { border-top-color: var(--coral); }
-.about-col.tone-peri { border-top-color: var(--peri); }
+/* The heading spans however many paragraphs sit beside it. */
+.about-col h2 {
+  grid-column: 1;
+  grid-row: 1 / span 3;
+}
+
+.about-col p {
+  grid-column: 2;
+}
+
+.about-col:nth-child(odd) {
+  background: var(--cream-deep);
+}
 
 .about-col h2 {
-  margin: 0 0 12px;
-  max-width: none;
-  font-size: clamp(19px, 1.6vw, 24px);
-  line-height: 1.14;
-  letter-spacing: -0.022em;
+  margin: 0;
+  max-width: 14em;
+  font-size: var(--fs-h3);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
 }
 
 .about-col p {
   margin: 0;
-  font-size: 15px;
-  line-height: 1.55;
+  font-size: var(--fs-body);
+  line-height: 1.3;
+  letter-spacing: -0.01em;
   color: var(--ink-soft);
 }
 
@@ -1597,26 +1556,23 @@ main {
   margin-top: 1em;
 }
 
-@media (max-width: 900px) {
-  .about-cols {
-    grid-template-columns: 1fr;
-    gap: 34px;
+@media (max-width: 860px) {
+  .about-col {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 20px;
   }
-}
 
-.about-statement h2 {
-  margin: 0 auto;
-  max-width: 24ch;
-  font-size: clamp(30px, 4.4vw, 64px);
-  line-height: 1.04;
-  letter-spacing: -0.035em;
-  text-wrap: balance;
+  .about-col h2,
+  .about-col p {
+    grid-column: 1;
+    grid-row: auto;
+  }
 }
 
 /* ----------------------------------------------------------------- footer --- */
 
-/* The dégradé lands on --night at the contact band and stays there — the
-   footer (and whatever legal copy joins it) is always the floor of the page. */
+/* The contact band is --night and the footer continues it, flat — the floor
+   of the page. */
 .footer {
   display: flex;
   flex-wrap: wrap;
@@ -1626,7 +1582,8 @@ main {
   padding: 30px var(--gutter) 40px;
   border-top: 0;
   background: var(--night);
-  font-size: 13px;
+  font-size: 15px;
+  letter-spacing: -0.005em;
   color: rgba(245, 245, 245, 0.62);
   position: relative;
   z-index: 1;
@@ -1664,6 +1621,7 @@ main {
   html,
   .site-nav,
   .scroll-books,
+  .hero-copy h1,
   .btn,
   .search-answer-body,
   .facts-item,

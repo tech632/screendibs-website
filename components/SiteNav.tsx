@@ -49,7 +49,7 @@ export default function SiteNav() {
   return (
     <nav className="site-nav" aria-label="Primary">
       {/*
-        On the home page the corner mark is the one the canvas flew there, so
+        On the home page the corner mark is the one the canvas seared there, so
         this is only its hit area and accessible name. Everywhere else there is
         no canvas, and the mark is drawn here.
       */}
