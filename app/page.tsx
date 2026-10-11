@@ -198,12 +198,12 @@ export default function Page() {
       <Hero />
       <main>
         <section className="section" id="company">
+          <header className="section-head">
+            <p className="section-index">01 — What</p>
+            <h2>We source and surface curated IP rights for Adaptations.</h2>
+          </header>
           <div className="section-split split-right">
             <div className="split-main">
-              <div className="section-head">
-                <span className="section-index">01 — What</span>
-                <h2>We source and surface curated IP rights for Adaptations.</h2>
-              </div>
               {/* VERBATIM */}
               <p className="section-lede">
                 Screendibs Technologies Inc. is breaking ground in the literary and entertainment industries.
@@ -230,16 +230,16 @@ export default function Page() {
           </div>
         </section>
 
-        <section className="section section-band" id="how">
+        <section className="section band-deep" id="how">
+          <header className="section-head">
+            <p className="section-index">02 — How</p>
+            <h2>Our Process.</h2>
+          </header>
           <div className="section-split split-left">
             <div className="split-panel">
               <SearchReveal items={HOW_SEARCHES} />
             </div>
             <div className="split-main">
-              <div className="section-head">
-                <span className="section-index">02 — How</span>
-                <h2>Our Process.</h2>
-              </div>
               <ol className="steps">
                 {STEPS.map((step, i) => (
                   <li key={step.title}>
@@ -253,18 +253,16 @@ export default function Page() {
           </div>
         </section>
 
-        <section className="section section-dusk" id="who" data-nav-theme="dark">
-          <div className="section-split split-center">
-            <div className="split-main">
-              <div className="section-head">
-                <span className="section-index">03 — Who</span>
-                {/* VERBATIM */}
-                <h2>Screendibs is positioned at the intersection of technology, literature and Entertainment.</h2>
-              </div>
-            </div>
-            <div className="split-panel">
-              <FactsTicker heading="A few things about IP, while you're here." facts={IP_FACTS} />
-            </div>
+        <section className="section band-night" id="who" data-nav-theme="dark">
+          <header className="section-head">
+            <p className="section-index">03 — Who</p>
+            {/* VERBATIM */}
+            <h2 className="statement">
+              Screendibs is positioned at the{" "}
+              <span className="accent">intersection of technology, literature and Entertainment.</span>
+            </h2>
+          </header>
+          <div className="section-split split-right">
             <div className="split-main">
               <h3 className="who-team">
                 Sd<span aria-hidden>*</span> Team
@@ -285,6 +283,9 @@ export default function Page() {
                 Meet the team
               </Link>
             </div>
+            <div className="split-panel">
+              <FactsTicker heading="A few things about IP, while you're here." facts={IP_FACTS} />
+            </div>
           </div>
           <div className="clients">
             <p className="clients-label">Our customers include</p>
@@ -296,10 +297,10 @@ export default function Page() {
           </div>
         </section>
 
-        <section className="section section-pitch" id="why" data-nav-theme="dark">
-          <div className="section-head">
-            <span className="section-index">04 — Why</span>
-          </div>
+        <section className="section" id="why">
+          <header className="section-head">
+            <p className="section-index">04 — Why</p>
+          </header>
           <div className="pitch-grid">
             {PITCHES.map((p) => (
               <article className={`pitch pitch-${p.tone}`} key={p.title}>

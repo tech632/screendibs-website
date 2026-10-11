@@ -16,12 +16,13 @@ export default function AboutPage() {
         <p className="eyebrow">About us</p>
         <h1>
           Company mission: Screendibs exists to make the discovery and
-          evaluation of adaptable intellectual property more efficient, logical
-          and actionable for entertainment industry professionals.
+          evaluation of adaptable intellectual property{" "}
+          <span className="accent">more efficient, logical and actionable</span>{" "}
+          for entertainment industry professionals.
         </h1>
       </section>
 
-      <section className="section about-cols">
+      <div className="about-cols">
         <div className="about-col tone-sage" id="mission">
           <h2>Streamlining the search for adaptation rights.</h2>
           <p>
@@ -60,7 +61,7 @@ export default function AboutPage() {
             development teams to track and evaluate adaptation— ready IP.
           </p>
         </div>
-      </section>
+      </div>
 
       <ContactBlock
         heading="Find your next story first."

@@ -81,14 +81,13 @@ export default function LogoSequence({ onSettle, onDone }: Props) {
     ro?.observe(canvas);
     window.addEventListener("resize", onResize);
 
-    // The corner transition is scrubbed by scroll, not played. One viewport of
-    // travel over 0.85 of the screen height completes it.
+    // The mark no longer moves with scroll: it is seared into the corner and
+    // stays. Scroll only fades the hero's own furniture (the cue) and tells the
+    // nav when to lay its veil down.
     let scrolled = false;
     function onScroll() {
       const y = window.scrollY;
-      const span = Math.max(1, window.innerHeight * 0.85);
-      const frac = y / span;
-      seq.setScroll(frac);
+      const frac = y / Math.max(1, window.innerHeight * 0.85);
       document.documentElement.style.setProperty(
         "--hero-fade",
         String(Math.max(0, 1 - frac * 1.7)),

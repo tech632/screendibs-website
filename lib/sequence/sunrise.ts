@@ -2,24 +2,28 @@ import { clamp01, easeInOutCubic, easeOutCubic, smoothstep } from "../easing";
 import { ValueNoise } from "../noise";
 import { rgb, CREAM, CREAM_DEEP, CREAM_LIT } from "../palette";
 import type { Rig } from "./rig";
-import type { FrontRef } from "./starfield";
 
 const ANGLES = 192;
 
 /**
- * Beat 4 — the merge becomes a sunrise.
+ * Beat 2 — the brand becomes a sunrise.
  *
- * The instant the five arms meet, a wavefront leaves the hub and floods the
- * frame with cream. It is not a flat circle: its radius is modulated per angle
- * by a noise ring, so it advances like light spilling over a horizon. The mark
- * inverts from bone to ink exactly where the front passes it, and the stars it
- * overtakes are consumed.
+ * As the sear cools, a wavefront leaves the mark in the top-left corner and
+ * floods the frame with cream. It is not a flat circle: its radius is modulated
+ * per angle by a noise ring, so it advances like light spilling over a horizon.
+ * The mark inverts from bone to ink exactly where the front passes it.
  */
 export class Sunrise {
   /** Per-angle radius multipliers, ~0.94 .. 1.06. */
   private wobble: Float32Array;
+  /**
+   * Length the light's own features (rim weight, sun bloom) scale with. The
+   * mark is nav-sized now, so it can't be the yardstick; the frame is.
+   */
+  private unit: number;
 
   constructor(private rig: Rig) {
+    this.unit = rig.diag * 0.14;
     const n = new ValueNoise(88221, 64);
     this.wobble = new Float32Array(ANGLES);
     for (let i = 0; i < ANGLES; i++) {
@@ -39,25 +43,6 @@ export class Sunrise {
     return easeInOutCubic(clamp01(p)) * this.rig.diag * 1.06;
   }
 
-  /** A front description the starfield can query. */
-  frontRef(p: number): FrontRef | null {
-    if (p <= 0) return null;
-    const R = this.baseRadius(p);
-    // The wobble flattens out as the front grows — a huge wave reads smooth.
-    const amp = 1 - smoothstep(0.15, 0.75, p);
-    const rig = this.rig;
-    const wob = this.wobble;
-    return {
-      cx: rig.astCx,
-      cy: rig.astCy,
-      radiusAt(x, y) {
-        const a = Math.atan2(y - rig.astCy, x - rig.astCx);
-        const i = ((((a / (Math.PI * 2)) * ANGLES) | 0) % ANGLES + ANGLES) % ANGLES;
-        return R * (1 + (wob[i] - 1) * amp);
-      },
-    };
-  }
-
   /** Trace the wobbled wavefront into the current path. */
   private tracePath(ctx: CanvasRenderingContext2D, p: number) {
     const R = this.baseRadius(p);
@@ -68,8 +53,8 @@ export class Sunrise {
       const idx = i % ANGLES;
       const a = (idx / ANGLES) * Math.PI * 2;
       const r = R * (1 + (this.wobble[idx] - 1) * amp);
-      const x = rig.astCx + Math.cos(a) * r;
-      const y = rig.astCy + Math.sin(a) * r;
+      const x = rig.sunX + Math.cos(a) * r;
+      const y = rig.sunY + Math.sin(a) * r;
       if (i === 0) ctx.moveTo(x, y);
       else ctx.lineTo(x, y);
     }
@@ -101,11 +86,11 @@ export class Sunrise {
       ctx.lineJoin = "round";
       ctx.globalAlpha = 0.72 * rimFade;
       ctx.strokeStyle = "rgba(247,120,70,1)";
-      ctx.lineWidth = Math.max(5, rig.cap * 0.1);
+      ctx.lineWidth = Math.max(5, this.unit * 0.1);
       ctx.stroke();
       ctx.globalAlpha = 0.95 * rimFade;
       ctx.strokeStyle = "rgba(255,250,238,1)";
-      ctx.lineWidth = Math.max(1.5, rig.cap * 0.014);
+      ctx.lineWidth = Math.max(1.5, this.unit * 0.014);
       ctx.stroke();
     }
     ctx.restore();
@@ -124,11 +109,11 @@ export class Sunrise {
   private fieldGradient(ctx: CanvasRenderingContext2D) {
     const rig = this.rig;
     const g = ctx.createRadialGradient(
-      rig.astCx,
-      rig.astCy,
+      rig.sunX,
+      rig.sunY,
       0,
-      rig.astCx,
-      rig.astCy,
+      rig.sunX,
+      rig.sunY,
       Math.max(1, rig.diag * 0.95),
     );
     g.addColorStop(0, rgb(CREAM_LIT));
@@ -145,7 +130,7 @@ export class Sunrise {
   private drawSun(ctx: CanvasRenderingContext2D, t: number, p: number) {
     const rig = this.rig;
     const coreR =
-      rig.cap *
+      this.unit *
       (0.4 + easeOutCubic(clamp01(p * 1.4)) * 3.4) *
       (1 + Math.sin(t * 0.55) * 0.03);
     // Blinding at the moment of ignition, then off the gas quickly — held high
@@ -154,11 +139,11 @@ export class Sunrise {
     ctx.save();
     ctx.globalCompositeOperation = "lighter";
     const g = ctx.createRadialGradient(
-      rig.astCx,
-      rig.astCy,
+      rig.sunX,
+      rig.sunY,
       0,
-      rig.astCx,
-      rig.astCy,
+      rig.sunX,
+      rig.sunY,
       Math.max(1, coreR),
     );
     // Warm white at the core falling off through the brand coral.
@@ -167,7 +152,7 @@ export class Sunrise {
     g.addColorStop(0.45, `rgba(247,140,105,${0.1 * coreA})`);
     g.addColorStop(1, "rgba(247,109,82,0)");
     ctx.fillStyle = g;
-    ctx.fillRect(rig.astCx - coreR, rig.astCy - coreR, coreR * 2, coreR * 2);
+    ctx.fillRect(rig.sunX - coreR, rig.sunY - coreR, coreR * 2, coreR * 2);
     ctx.restore();
   }
 

@@ -21,11 +21,11 @@ export default function ContactBlock({
   linkOut = true,
 }: Props) {
   return (
-    <section className="section section-contact" id="contact" data-nav-theme="dark">
-      <div className="section-head">
-        {index ? <span className="section-index">{index}</span> : null}
+    <section className="section section-contact band-night" id="contact" data-nav-theme="dark">
+      <header className="section-head">
+        {index ? <p className="section-index">{index}</p> : null}
         <h2>{heading}</h2>
-      </div>
+      </header>
 
       <form className="access" action="#" method="post">
         <input
