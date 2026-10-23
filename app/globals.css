@@ -258,11 +258,15 @@ html.is-nav-dark .site-nav .btn:hover {
    page — and above the nav too, since it sits inside the nav row and would
    otherwise land behind the nav's own backdrop. Click-through, so the hit area
    beneath it still works. */
+/* Sized in svh, like the hero whose rect sets its backing store. With
+   `inset: 0` it tracked the dynamic viewport instead, so on phones the bitmap
+   was stretched every time the URL bar slid away and the mark jumped. */
 .mark-canvas {
   position: fixed;
-  inset: 0;
+  top: 0;
+  left: 0;
   width: 100%;
-  height: 100%;
+  height: 100svh;
   display: block;
   z-index: 46;
   pointer-events: none;
@@ -797,6 +801,25 @@ main {
   line-height: 1;
 }
 
+/* The card must never change height mid-loop: on a phone it sits in the
+   page's single column, so every grow or shrink shoves everything below it
+   while the reader is scrolling. Each slot stacks every state it can show in
+   one grid cell (invisible ghosts of every query, every answer), so its
+   height is the tallest of them from the first frame. */
+.search-slot {
+  display: grid;
+  flex: 1;
+  min-width: 0;
+}
+
+.search-slot > * {
+  grid-area: 1 / 1;
+}
+
+.search-ghost {
+  visibility: hidden;
+}
+
 .search-typed {
   font-size: 15px;
   color: var(--ink);
@@ -819,12 +842,19 @@ main {
 }
 
 .search-answer {
+  display: grid;
   padding: 14px 18px 18px;
   min-height: 3.6em;
 }
 
+.search-answer > * {
+  grid-area: 1 / 1;
+  align-self: start;
+}
+
 .search-thinking {
-  display: none;
+  display: inline-flex;
+  visibility: hidden;
   align-items: center;
   gap: 8px;
   font-size: 13px;
@@ -833,7 +863,7 @@ main {
 }
 
 .is-thinking .search-thinking {
-  display: inline-flex;
+  visibility: visible;
 }
 
 .think-ast {
@@ -852,7 +882,7 @@ main {
   transition: opacity 0.5s var(--ease), transform 0.5s var(--ease);
 }
 
-.is-answer .search-answer-body {
+.is-answer .search-answer-body.is-current {
   opacity: 1;
   transform: none;
 }
@@ -1367,6 +1397,78 @@ main {
   color: var(--ink-soft);
 }
 
+/* ----------------------------------------------------------- legal pages --- */
+
+.legal-page {
+  padding-left: var(--gutter);
+  padding-right: var(--gutter);
+  padding-bottom: var(--band-pad);
+}
+
+.legal-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+  margin-bottom: clamp(32px, 4vw, 56px);
+  font-size: var(--fs-label);
+}
+
+.legal-tabs a {
+  color: var(--ink-soft);
+  text-decoration: none;
+}
+
+.legal-tabs a:hover,
+.legal-tabs a.is-current {
+  color: var(--coral-deep);
+}
+
+.legal-doc {
+  max-width: 44em;
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--ink-soft);
+}
+
+.legal-doc h1 {
+  margin: 0 0 clamp(24px, 3vw, 40px);
+  font-size: clamp(36px, 5vw, 64px);
+  font-weight: 300;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.legal-doc h2 {
+  margin: 2.2em 0 0.6em;
+  font-size: 22px;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+.legal-doc h3 {
+  margin: 1.6em 0 0.4em;
+  font-size: 17px;
+  color: var(--ink);
+}
+
+.legal-doc p,
+.legal-doc ul {
+  margin: 0 0 1em;
+}
+
+.legal-doc ul {
+  padding-left: 1.2em;
+}
+
+.legal-doc li + li {
+  margin-top: 0.4em;
+}
+
+.legal-doc strong {
+  color: var(--ink);
+}
+
 /* --------------------------------------------------------- contact page --- */
 
 .contact-top {
@@ -1597,7 +1699,8 @@ main {
 
 .footer nav {
   display: flex;
-  gap: 22px;
+  flex-wrap: wrap;
+  gap: 10px 22px;
 }
 
 .footer nav a:hover {
@@ -1615,6 +1718,15 @@ main {
   mix-blend-mode: multiply;
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='160' height='160' filter='url(%23n)' opacity='0.42'/></svg>");
   background-size: 160px 160px;
+}
+
+/* A fixed, full-screen multiply layer makes phones re-blend the whole page on
+   every scroll frame, which shows up as stutter. The grain is barely visible
+   at phone sizes anyway, so touch screens go without it. */
+@media (pointer: coarse) {
+  .grain {
+    display: none;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

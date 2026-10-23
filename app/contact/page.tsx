@@ -66,13 +66,7 @@ export default function ContactPage() {
               *
             </span>
             <h2>Studio</h2>
-            <p>
-              1050 Churchill Road
-              <br />
-              Mont-Royal, Quebec H3R 3B6
-              <br />
-              Canada
-            </p>
+            <p>Montreal, Canada</p>
             <p className="note">Visits by appointment.</p>
           </div>
         </aside>

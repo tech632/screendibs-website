@@ -132,11 +132,19 @@ export default function SearchReveal({
           <span className="search-ic" aria-hidden>
             *
           </span>
-          <span className="search-typed">
-            {typed}
-            {phase === "typing" || phase === "idle" ? (
-              <span className="search-caret" aria-hidden />
-            ) : null}
+          <span className="search-slot">
+            {items.map((it) => (
+              <span className="search-typed search-ghost" aria-hidden key={it.query}>
+                {it.query}
+                <span className="search-caret" />
+              </span>
+            ))}
+            <span className="search-typed">
+              {typed}
+              {phase === "typing" || phase === "idle" ? (
+                <span className="search-caret" aria-hidden />
+              ) : null}
+            </span>
           </span>
         </div>
 
@@ -147,15 +155,21 @@ export default function SearchReveal({
             </span>
             {thinkingLabel}
           </span>
-          <div className="search-answer-body">
-            <span className="search-answer-label">
-              <span className="search-answer-ic" aria-hidden>
-                *
+          {items.map((it, i) => (
+            <div
+              key={it.query}
+              className={`search-answer-body${i === index ? " is-current" : ""}`}
+              aria-hidden={i !== index}
+            >
+              <span className="search-answer-label">
+                <span className="search-answer-ic" aria-hidden>
+                  *
+                </span>
+                {it.answerLabel}
               </span>
-              {item.answerLabel}
-            </span>
-            <p>{item.answer}</p>
-          </div>
+              <p>{it.answer}</p>
+            </div>
+          ))}
         </div>
       </div>
     </div>
