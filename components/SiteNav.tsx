@@ -4,14 +4,21 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 import SdMark from "./SdMark";
+import LangToggle from "./LangToggle";
+import type { Dictionary } from "@/lib/i18n/en";
 
-const LINKS = [
-  { href: "/", label: "Company" },
-  { href: "/about", label: "About" },
-  { href: "/team", label: "Team" },
-];
+interface Props {
+  locale: "en" | "fr";
+  t: Pick<Dictionary, "nav" | "lang">;
+}
 
-export default function SiteNav() {
+export default function SiteNav({ locale, t }: Props) {
+  const LINKS = [
+    { href: "/", label: t.nav.company },
+    { href: "/about", label: t.nav.about },
+    { href: "/team", label: t.nav.team },
+  ];
+
   const pathname = usePathname();
   const isHome = pathname === "/";
 
@@ -47,13 +54,13 @@ export default function SiteNav() {
   }, [pathname]);
 
   return (
-    <nav className="site-nav" aria-label="Primary">
+    <nav className="site-nav" aria-label={t.nav.primary}>
       {/*
         On the home page the corner mark is the one the canvas seared there, so
         this is only its hit area and accessible name. Everywhere else there is
         no canvas, and the mark is drawn here.
       */}
-      <Link className="nav-mark" href="/" aria-label="Screendibs — home">
+      <Link className="nav-mark" href="/" aria-label={t.nav.home}>
         {isHome ? <span className="nav-mark-slot" /> : <SdMark size={18} />}
       </Link>
 
@@ -74,8 +81,11 @@ export default function SiteNav() {
             className={`btn btn-sm${pathname === "/contact" ? " is-current" : ""}`}
             href="/contact"
           >
-            Contact
+            {t.nav.contact}
           </Link>
+        </li>
+        <li>
+          <LangToggle locale={locale} label={t.lang.switchTo} code={t.lang.otherCode} />
         </li>
       </ul>
     </nav>

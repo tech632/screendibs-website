@@ -1,4 +1,5 @@
 import Link from "next/link";
+import type { Dictionary } from "@/lib/i18n/en";
 
 interface Props {
   index?: string;
@@ -6,6 +7,7 @@ interface Props {
   note?: string;
   /** Show the "full contact page" link. Off on the contact page itself. */
   linkOut?: boolean;
+  t: Dictionary["contactBlock"];
 }
 
 /**
@@ -19,6 +21,7 @@ export default function ContactBlock({
   heading,
   note,
   linkOut = true,
+  t,
 }: Props) {
   return (
     <section className="section section-contact band-night" id="contact" data-nav-theme="dark">
@@ -32,17 +35,17 @@ export default function ContactBlock({
           type="email"
           name="email"
           placeholder="you@company.com"
-          aria-label="Email address"
+          aria-label={t.emailLabel}
           required
         />
         <button className="btn btn-coral" type="submit">
-          Request access
+          {t.button}
         </button>
       </form>
 
       <p className="note">
         {note ? `${note} ` : null}
-        {linkOut ? <Link href="/contact">Go to the contact page →</Link> : null}
+        {linkOut ? <Link href="/contact">{t.linkOut}</Link> : null}
       </p>
     </section>
   );

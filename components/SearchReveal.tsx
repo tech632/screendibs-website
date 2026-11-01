@@ -11,16 +11,18 @@ interface Item {
 interface Props {
   items: Item[];
   thinkingLabel?: string;
+  /** Label in the window chrome. */
+  label?: string;
 }
 
 type Phase = "idle" | "typing" | "thinking" | "answer";
 
-const Chrome = () => (
+const Chrome = ({ label }: { label: string }) => (
   <div className="search-chrome">
     <span className="search-dot" />
     <span className="search-dot" />
     <span className="search-dot" />
-    <span className="search-chrome-label">Search</span>
+    <span className="search-chrome-label">{label}</span>
   </div>
 );
 
@@ -35,6 +37,7 @@ const Chrome = () => (
 export default function SearchReveal({
   items,
   thinkingLabel = "Checking the shelf…",
+  label = "Search",
 }: Props) {
   const ref = useRef<HTMLDivElement>(null);
   const [index, setIndex] = useState(0);
@@ -101,7 +104,7 @@ export default function SearchReveal({
     return (
       <div className="search-reveal is-reduced" ref={ref}>
         <div className="search-card">
-          <Chrome />
+          <Chrome label={label} />
           {items.map((it) => (
             <div className="search-static" key={it.query}>
               <p className="search-static-q">
@@ -127,7 +130,7 @@ export default function SearchReveal({
   return (
     <div className={`search-reveal is-${phase}`} ref={ref}>
       <div className="search-card">
-        <Chrome />
+        <Chrome label={label} />
         <div className="search-box">
           <span className="search-ic" aria-hidden>
             *

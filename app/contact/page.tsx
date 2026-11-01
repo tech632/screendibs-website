@@ -1,59 +1,59 @@
 import type { Metadata } from "next";
+import { getDictionary } from "@/lib/i18n";
 
-export const metadata: Metadata = {
-  title: "Contact",
-  description: "Talk to Screendibs.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const { t } = await getDictionary();
+  return { title: t.meta.contactTitle, description: t.meta.contactDescription };
+}
 
 /* PLACEHOLDER — none of these details are real and the form has no backend. */
 const DETAILS = [
-  { label: "General", value: "hello@screendibs.com", href: "mailto:hello@screendibs.com" },
-  { label: "Press", value: "press@screendibs.com", href: "mailto:press@screendibs.com" },
-  { label: "Careers", value: "jobs@screendibs.com", href: "mailto:jobs@screendibs.com" },
+  { key: "general", label: "General", value: "hello@screendibs.com", href: "mailto:hello@screendibs.com" },
+  { key: "press", label: "Press", value: "press@screendibs.com", href: "mailto:press@screendibs.com" },
+  { key: "careers", label: "Careers", value: "jobs@screendibs.com", href: "mailto:jobs@screendibs.com" },
 ];
 
-export default function ContactPage() {
+export default async function ContactPage() {
+  const { t } = await getDictionary();
+  const c = t.contact;
+
   return (
     <main className="page">
       <section className="contact-top">
-        <p className="eyebrow">Screendibs</p>
-        <h1>Get in touch.</h1>
-        <p className="lede">
-          Whether you are a producer scouting new material, an agent marketing a rights catalog,
-          or a writer with a story to tell, we'd love to hear from you. Expect a response from
-          our team within 1–2 business days.
-        </p>
+        <p className="eyebrow">{c.eyebrow}</p>
+        <h1>{c.title}</h1>
+        <p className="lede">{c.lede}</p>
       </section>
 
       <section className="contact-grid">
         <form className="contact-form" action="#" method="post">
           <div className="field">
-            <label htmlFor="c-name">Name</label>
+            <label htmlFor="c-name">{c.name}</label>
             <input id="c-name" name="name" type="text" required />
           </div>
           <div className="field">
-            <label htmlFor="c-email">Email</label>
+            <label htmlFor="c-email">{c.email}</label>
             <input id="c-email" name="email" type="email" required />
           </div>
           <div className="field">
-            <label htmlFor="c-org">Organisation</label>
+            <label htmlFor="c-org">{c.org}</label>
             <input id="c-org" name="organisation" type="text" />
           </div>
           <div className="field">
-            <label htmlFor="c-msg">Tell us about your catalog or development needs.</label>
+            <label htmlFor="c-msg">{c.message}</label>
             <textarea id="c-msg" name="message" rows={6} required />
           </div>
           <button className="btn btn-coral" type="submit">
-            Send it
+            {c.send}
           </button>
-          <p className="note">Our platform is currently in private beta. Send us a message to request early access.</p>
+          <p className="note">{c.beta}</p>
         </form>
 
         <aside className="contact-aside">
           <dl className="contact-details">
             {DETAILS.map((d) => (
               <div key={d.label}>
-                <dt>{d.label}</dt>
+                <dt>{c.details[d.key as keyof typeof c.details]}</dt>
                 <dd>
                   <a href={d.href}>{d.value}</a>
                 </dd>
@@ -65,9 +65,9 @@ export default function ContactPage() {
             <span className="card-ast" aria-hidden>
               *
             </span>
-            <h2>Studio</h2>
-            <p>Montreal, Canada</p>
-            <p className="note">Visits by appointment.</p>
+            <h2>{c.studio}</h2>
+            <p>{c.studioPlace}</p>
+            <p className="note">{c.visits}</p>
           </div>
         </aside>
       </section>

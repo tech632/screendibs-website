@@ -3,6 +3,7 @@ import { join } from "node:path";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Fragment, type ReactNode } from "react";
+import { getDictionary } from "@/lib/i18n";
 
 /*
  * The legal pages. Text comes from documents/legal/ in the Screendibs repo (Jonathan Nuss's
@@ -80,10 +81,11 @@ const inline = (text: string): ReactNode =>
 export default async function LegalPage({ params }: { params: Promise<{ doc: string }> }) {
   const { doc } = await params;
   const key = doc as DocKey;
+  const { t } = await getDictionary();
 
   return (
     <main className="page legal-page">
-      <nav className="legal-tabs" aria-label="Legal documents">
+      <nav className="legal-tabs" aria-label={t.legal.tabsLabel}>
         {(Object.keys(DOCS) as DocKey[]).map((k) => (
           <Link
             key={k}
@@ -91,11 +93,16 @@ export default async function LegalPage({ params }: { params: Promise<{ doc: str
             className={k === key ? "is-current" : undefined}
             aria-current={k === key ? "page" : undefined}
           >
-            {DOCS[k].label}
+            {t.legal.tabs[k]}
           </Link>
         ))}
       </nav>
-      <article className="legal-doc">
+      {t.legal.englishOnly ? (
+        <p className="note legal-lang-note" lang="fr">
+          {t.legal.englishOnly}
+        </p>
+      ) : null}
+      <article className="legal-doc" lang="en">
         {toBlocks(read(key)).map((b, i) => {
           if (b.type === "ul")
             return (
