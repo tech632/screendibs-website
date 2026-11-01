@@ -105,19 +105,19 @@ const en = {
     whoPara:
       "In 2021, our founder secured a book-to-screen IP adaptation rights deal with a major Hollywood studio. He then decided to reinvent the process, by making this information more accessible with next generation technology. Screendibs is a 21st century company with a team of film, software and legal professionals who seek to solve the persistent disconnect between valuable literary properties and those who are searching for them. We provide the solutions that make quality literary IP discoverable and optioning straightforward.",
     whoPara2:
-      "Working from Montreal and France, our multidisciplinary team brings together decades of experience in film development, rights, semantic search technology, and interface design to help customers find and adapt the stories of tomorrow — today.",
+      "Working from Montreal and Paris, our multidisciplinary team brings together decades of experience in film development, rights, semantic search technology, and interface design to help customers find and adapt the stories of tomorrow — today.",
     meetTeam: "Meet the team",
     factsHeading: "A few things about IP, while you're here.",
     clientsLabel: "Our customers include",
     /* VERBATIM, one chip per segment. */
     clients: [
       "film and television production companies",
-      "independent TV and film producers",
-      "streaming Studios",
+      "independent producers",
+      "streaming studios",
       "screenwriters",
       "theater producers",
       "playwrights",
-      "gaming Studios",
+      "gaming studios",
       "gaming companies",
       "entrepreneurs",
       "and more",
@@ -132,7 +132,7 @@ const en = {
       {
         tone: "peri",
         title: "Enterprise development teams",
-        body: "We offer enterprise customers a useful research tool for development teams to track and evaluate adaptation— ready IP.",
+        body: "We offer enterprise customers a useful research tool for development teams to track and evaluate adaptation-ready IP.",
       },
     ],
     requestAccess: "Request access",
@@ -244,25 +244,26 @@ const en = {
   },
 
   about: {
-    eyebrow: "About us",
-    /* VERBATIM — [before, accent, after]. */
+    eyebrow: "Company mission",
+    /* [before, accent, after]. Tightened 1 Nov 2026 so the page reads as one
+       story, at Ben's request. */
     mission: [
-      "Company mission: Screendibs makes the discovery and evaluation of adaptable intellectual property",
+      "Screendibs makes the discovery and evaluation of adaptable intellectual property",
       "more efficient, logical and actionable",
       "for the entertainment industry.",
     ],
     missionTitle: "Streamlining the search for adaptation rights.",
     missionParas: [
-      "Screendibs Technologies Inc. is breaking ground in the literary and entertainment industries.",
-      "Our mission is to streamline the process of finding and securing adaptation rights for books, comics, video games and other valuable IP. Leveraging a database of over 100 million sources, our advanced search function allows users to locate what they desire. Users can inquire about the adaptation rights status and, if needed, obtain the contact information of the rights holder.",
+      "Screendibs Technologies Inc. is breaking ground in the literary and entertainment industries. We make it simpler to find and secure adaptation rights for books, comics, video games and other valuable IP.",
+      "Our search covers a database of over 100 million sources. Users find the works they are looking for, check the status of their adaptation rights and, when needed, get the rights holder’s contact details.",
     ],
     customersTitle: "Who we serve.",
     customers:
-      "Our customers include film and television production companies, independent TV and film producers, streaming Studios, screenwriters, theater producers, playwrights, gaming Studios, gaming companies, entrepreneurs and more.",
+      "Our customers include film and television production companies, independent producers, streaming studios, screenwriters, theater producers, playwrights, gaming studios and companies, entrepreneurs and more.",
     platformTitle: "Independent producers looking for valuable IP?",
     platformParas: [
       "Our platform helps users quickly discover books, articles, comics, video games and more for adaptation — before their competitors do.",
-      "We offer enterprise customers a useful research tool for development teams to track and evaluate adaptation— ready IP.",
+      "For enterprise customers, we offer a research tool that lets development teams track and evaluate adaptation-ready IP.",
     ],
     ctaHeading: "Find your next adaptation.",
     ctaNote: "Prefer a conversation?",
@@ -274,7 +275,7 @@ const en = {
     stats: [
       { value: "2021", label: "First studio adaptation deal" },
       { value: "3", label: "Disciplines: film, software, law" },
-      { value: "2", label: "Bases: Montreal and France" },
+      { value: "2", label: "Bases: Montreal and Paris" },
     ],
     members: {
       john: {

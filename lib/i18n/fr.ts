@@ -104,13 +104,13 @@ const fr: Dictionary = {
     whoPara:
       "En 2021, notre fondateur a conclu un accord de droits d’adaptation d’un livre à l’écran avec un grand studio hollywoodien. Il a alors décidé de réinventer le processus, en rendant cette information plus accessible grâce à une technologie de nouvelle génération. Screendibs est une entreprise du XXIe siècle, avec une équipe de professionnels du cinéma, du logiciel et du droit qui veulent combler le fossé persistant entre les œuvres littéraires de valeur et ceux qui les recherchent. Nous proposons les solutions qui rendent la PI littéraire de qualité facile à découvrir et l’option sur les droits simple à obtenir.",
     whoPara2:
-      "Depuis Montréal et la France, notre équipe pluridisciplinaire réunit des décennies d’expérience en développement de films, en droits, en recherche sémantique et en design d’interface pour aider nos clients à trouver et adapter, dès aujourd’hui, les histoires de demain.",
+      "Depuis Montréal et Paris, notre équipe pluridisciplinaire réunit des décennies d’expérience en développement de films, en droits, en recherche sémantique et en design d’interface pour aider nos clients à trouver et adapter, dès aujourd’hui, les histoires de demain.",
     meetTeam: "Découvrir l’équipe",
     factsHeading: "Quelques faits sur la PI, pendant que vous êtes là.",
     clientsLabel: "Parmi nos clients",
     clients: [
       "sociétés de production cinéma et télévision",
-      "producteurs indépendants de cinéma et de télévision",
+      "producteurs indépendants",
       "studios de streaming",
       "scénaristes",
       "producteurs de théâtre",
@@ -242,24 +242,24 @@ const fr: Dictionary = {
   },
 
   about: {
-    eyebrow: "À propos",
+    eyebrow: "Notre mission",
     mission: [
-      "Notre mission : Screendibs rend la découverte et l’évaluation de la propriété intellectuelle adaptable",
+      "Screendibs rend la découverte et l’évaluation de la propriété intellectuelle adaptable",
       "plus efficaces, logiques et concrètes",
       "pour l’industrie du divertissement.",
     ],
     missionTitle: "Simplifier la recherche de droits d’adaptation.",
     missionParas: [
-      "Screendibs Technologies Inc. innove dans les industries du livre et du divertissement.",
-      "Notre mission est de simplifier la recherche et l’acquisition des droits d’adaptation de livres, bandes dessinées, jeux vidéo et autres propriétés intellectuelles de valeur. Grâce à une base de données de plus de 100 millions de sources, notre moteur de recherche avancé permet aux utilisateurs de trouver ce qu’ils cherchent. Ils peuvent se renseigner sur le statut des droits d’adaptation et, si besoin, obtenir les coordonnées de l’ayant droit.",
+      "Screendibs Technologies Inc. innove dans les industries du livre et du divertissement. Nous simplifions la recherche et l’acquisition des droits d’adaptation de livres, bandes dessinées, jeux vidéo et autres propriétés intellectuelles de valeur.",
+      "Notre recherche couvre une base de plus de 100 millions de sources. Les utilisateurs trouvent les œuvres qu’ils cherchent, vérifient le statut de leurs droits d’adaptation et, si besoin, obtiennent les coordonnées de l’ayant droit.",
     ],
     customersTitle: "Nos clients.",
     customers:
-      "Parmi nos clients : des sociétés de production cinéma et télévision, des producteurs indépendants de cinéma et de télévision, des studios de streaming, des scénaristes, des producteurs de théâtre, des dramaturges, des studios et éditeurs de jeux vidéo, des entrepreneurs et bien d’autres.",
+      "Parmi nos clients : des sociétés de production cinéma et télévision, des producteurs indépendants, des studios de streaming, des scénaristes, des producteurs de théâtre, des dramaturges, des studios et éditeurs de jeux vidéo, des entrepreneurs et bien d’autres.",
     platformTitle: "Producteur indépendant à la recherche de PI de valeur ?",
     platformParas: [
       "Notre plateforme aide les utilisateurs à découvrir rapidement livres, articles, bandes dessinées, jeux vidéo et plus encore à adapter — avant leurs concurrents.",
-      "Nous offrons aux entreprises un outil de recherche pour que leurs équipes de développement suivent et évaluent la PI prête à être adaptée.",
+      "Aux entreprises, nous proposons un outil de recherche qui permet à leurs équipes de développement de suivre et d’évaluer la PI prête à être adaptée.",
     ],
     ctaHeading: "Trouvez votre prochaine adaptation.",
     ctaNote: "Vous préférez en parler ?",
@@ -271,7 +271,7 @@ const fr: Dictionary = {
     stats: [
       { value: "2021", label: "Premier accord d’adaptation avec un studio" },
       { value: "3", label: "Disciplines : cinéma, logiciel, droit" },
-      { value: "2", label: "Bases : Montréal et la France" },
+      { value: "2", label: "Bases : Montréal et Paris" },
     ],
     members: {
       john: {
