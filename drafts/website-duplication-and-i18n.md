@@ -1,6 +1,6 @@
 # Marketing site vs. app (Vercel): duplicated content, and French + English
 
-Inventory only, nothing merged. "Site" = `website/` (Next.js, screendibs company site). "App" = `app/app/` (React + Vite on Vercel), whose landing page and menu pages (About Us, How It Works, Pricing, FAQ) also act as a marketing site.
+Inventory written 8 Nov 2026. **Update 9 Nov 2026:** the contradictory claims are fixed (100M+ sources everywhere; reports described as 1, 3 and 5 pages), the founder's name is removed from the Team page, the app links to the site's legal pages, and both the site and the app are now in French and English (see the end of this file). The site/app split of company pages is not done. "Site" = `website/` (Next.js, screendibs company site). "App" = `app/app/` (React + Vite on Vercel), whose landing page and menu pages (About Us, How It Works, Pricing, FAQ) also act as a marketing site.
 
 ## Duplicated content
 
@@ -31,5 +31,10 @@ Suggested direction when you're ready to merge: the site owns company content (A
 - AI output: prompts (`constants/prompts.js`) would need a target-language parameter so search results, the taste-profile chat and reports come back in French. Report layouts (`src/reports/`) are tuned to fixed lengths; French text runs ~15-20% longer, so the page-fit logic needs re-checking.
 - Emails (`api/send-*.js`), Stripe checkout locale, Firebase verification email templates (set per language in the Firebase console), dates and number/currency formatting (prices stay USD, but "9,99 $ US" in French).
 - Store the user's language in their profile so emails and reports use it.
+
+**Done 9 Nov 2026 (draft French, needs a French-speaking reviewer):**
+- Website: every page under `/fr` and `/en` (`app/[lang]/`), copy in `dictionaries/en.ts` and `fr.ts`, a FR/EN switch in the nav, `proxy.ts` sends unprefixed URLs to the browser's language (French by default), `hreflang` alternates, `html lang` set per language.
+- App: `src/i18n/` with English text as keys and French in `fr*.js`. `npm run i18n:missing` lists untranslated strings (0 today); `npm run i18n:wrap <file>` wraps new copy. The language is saved in the user's profile; AI prompts ask for French output; French reports ask for about 15% fewer words; emails and Firebase verification emails follow the language; prices read "9,99 $ US".
+- Still to do: French Firebase email templates in the Firebase console, Stripe Checkout locale (Stripe is still simulated on `main`), and a French-speaking reviewer.
 
 **Shared:** one glossary (for example "Taste Profile" = « Profil de goûts »?) so the site, app and legal texts use the same terms; a French-speaking reviewer for tone.

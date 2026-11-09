@@ -58,7 +58,7 @@ const BASE_W = 100;
 const STEP = 0.9;
 const ASPECT = VIEW_H / VIEW_W;
 
-export default function ScrollBooks() {
+export default function ScrollBooks({ label }: { label: string }) {
   return (
     <div className="hero-cue">
       <div className="scroll-books" aria-hidden>
@@ -103,7 +103,7 @@ export default function ScrollBooks() {
         })}
       </div>
       {/* Read as a word, not as six loose letters. */}
-      <span className="sr-only">Scroll down</span>
+      <span className="sr-only">{label}</span>
     </div>
   );
 }

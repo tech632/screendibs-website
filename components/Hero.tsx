@@ -9,7 +9,7 @@ import ScrollBooks from "./ScrollBooks";
  * one flush-left headline (trimmed from the "What" heading below) and the cue
  * to keep going. The headline stays hidden until the intro has revealed it.
  */
-export default function Hero() {
+export default function Hero({ headline, scrollLabel }: { headline: string; scrollLabel: string }) {
   const [revealed, setRevealed] = useState(false);
 
   const handleSettle = useCallback(() => setRevealed(true), []);
@@ -25,9 +25,9 @@ export default function Hero() {
     <header className={`hero${revealed ? " is-revealed" : ""}`}>
       <LogoSequence onSettle={handleSettle} />
       <div className="hero-copy">
-        <h1>Curated IP rights for Adaptations.</h1>
+        <h1>{headline}</h1>
       </div>
-      <ScrollBooks />
+      <ScrollBooks label={scrollLabel} />
     </header>
   );
 }

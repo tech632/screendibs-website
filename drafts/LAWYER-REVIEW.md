@@ -34,6 +34,21 @@ Jonathan's drafts in `content/legal/` are already thorough and Quebec-aware: Con
 | 10 | **Promotion advertising.** | The launch offer and "price of a coffee" style claims: check CPA rules on advertised reductions and price claims. |
 | 11 | **Cookie Notice.** | Still says the app only stores sign-in tokens and the dark-mode choice. The app now also stores the beta-notice dismissal in local storage (functional, no consent needed in most readings, but list it). |
 
+## Status after the 9 November 2026 pass
+
+| # | What was done | Still needs |
+|---|---|---|
+| 1 | French drafts of all five documents in `drafts/legal-beta/fr/` (Terms, Privacy, Disclaimer, Cookie Notice, Website Terms of Use) plus the French beta notice. The website and the app are now French-first (French by default, English on request). The website's legal pages show the French version once it is placed in `content/legal/fr/`; until then they show the English text under a "French version in preparation" notice. | Review by a legal translator and by you. These are machine-assisted working translations. Terms §1 "Language" also needs the Charter rule on when the English version can bind. |
+| 2 | Nothing changed. The app still stores the full date of birth. | Your decision: keep the full date or store only an "18 or older" flag. Switching is a small code change. |
+| 3 | Nothing changed. | Your confirmation of the notice period and form. |
+| 4 | The pricing page now says "Unlimited search, subject to fair use" (English and French). Terms §7 notes it. | Your confirmation that this is enough with the 4/minute and 30/day cap. |
+| 5–8 | Nothing changed. | Your review. |
+| 9 | **New conflict to resolve:** on 9 Nov the founder's name was removed from the website and the app. Law 25 still requires the title and contact details of the person in charge to be published. The French Privacy draft says "the co-founder and CEO" without a name. | Your decision on whether a title is enough or a name must be published. |
+| 10 | Nothing changed ("price of a coffee" still on the pricing page). | Your review. |
+| 11 | Done in `drafts/legal-beta/cookie-notice.md` (and French): adds the beta-notice dismissal and the new language preference ("screendibs-lang"). | Your review. |
+
+Also new: the app now links to the Terms, Privacy Policy and Disclaimer on the website (sign-up screen and footer) in the user's language, and emails go out in the user's language. The Privacy draft lists the language preference as new data [BETA].
+
 ## Not changed (out of scope for this pass)
 
 Website Terms of Use and Cookie Notice drafts were not rewritten; only item 11 above needs a one-line update.

@@ -124,7 +124,7 @@ You agree not to, and not to help anyone else to:
 
 ### Fair use of "unlimited" features
 
-Where a plan includes "unlimited" searches or reports, this means unlimited use by one person for their own normal professional or personal use, subject to reasonable technical limits that protect the Service for everyone (for example limits on the number of requests per minute). If we reasonably believe use is automated, shared or abusive, we may limit it after telling you, where reasonable. [ASSUMPTION: Jon to confirm this is acceptable given that the plan features shown in the app say "unlimited".]
+Where a plan includes "unlimited" searches or reports, this means unlimited use by one person for their own normal professional or personal use, subject to reasonable technical limits that protect the Service for everyone (for example limits on the number of requests per minute). If we reasonably believe use is automated, shared or abusive, we may limit it after telling you, where reasonable. [UPDATE 9 Nov 2026: the pricing page now says "Unlimited search, subject to fair use". Jon to confirm this is enough given the current cap of 4 searches a minute and 30 a day.]
 
 ## 8. Your content
 

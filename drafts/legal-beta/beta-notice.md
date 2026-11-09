@@ -12,4 +12,20 @@ We're still testing. You won't be charged during the beta, and search stays free
 
 Checkout page adds: "Your card is only used to pay for reports. Search is always free." and "Beta: checkout runs in test mode. You won't be charged."
 
-To confirm before launch: the "we don't sell your data" and "delete at any time" promises match the Privacy Policy, and a link to the Privacy Policy is added once it is published (the app has no legal page on `main`).
+To confirm before launch: the "we don't sell your data" and "delete at any time" promises match the Privacy Policy.
+
+**Update 9 Nov 2026:** the app now links to the Terms of Service, Privacy Policy and Disclaimer on the website (sign-up screen and footer), in the user's language. The pricing page now says "Unlimited search, subject to fair use" (review point 4).
+
+## French version (draft translation, to review)
+
+**Screendibs est en version bêta.**
+Nous sommes encore en phase de test. Vous ne serez pas facturé pendant la bêta, et la recherche reste gratuite.
+
+*Comment nous utilisons vos données* (se déplie) :
+
+- Tout paiement affiché fonctionne en mode test. Aucun montant réel n’est prélevé.
+- Nous conservons les renseignements de votre compte (courriel, nom, date de naissance) et votre profil de goûts pour gérer votre compte et personnaliser vos résultats et vos rapports.
+- Vos recherches et vos réponses au profil de goûts sont transmises à notre fournisseur d’IA pour générer les résultats. Nous ne vendons pas vos données.
+- Les fonctionnalités, les résultats et les prix peuvent changer pendant les tests. Vous pouvez nous demander en tout temps de supprimer votre compte et vos données.
+
+La page de paiement ajoute : « Votre carte sert uniquement à payer des rapports. La recherche est toujours gratuite. » et « Bêta : le paiement fonctionne en mode test. Vous ne serez pas facturé. »

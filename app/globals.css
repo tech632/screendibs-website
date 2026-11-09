@@ -224,6 +224,13 @@ html.is-nav-dark .site-nav .btn:hover {
   color: var(--coral-deep);
 }
 
+/* FR / EN switch: the other language's name, set small so it reads as a utility. */
+.site-nav a.nav-lang {
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
 @media (max-width: 620px) {
   .site-nav ul {
     gap: 14px;
@@ -1421,6 +1428,11 @@ main {
 .legal-tabs a:hover,
 .legal-tabs a.is-current {
   color: var(--coral-deep);
+}
+
+.legal-untranslated {
+  max-width: 44em;
+  margin: 0 0 24px;
 }
 
 .legal-doc {

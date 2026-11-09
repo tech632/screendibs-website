@@ -1,36 +1,57 @@
 import type { Metadata, Viewport } from "next";
+import { notFound } from "next/navigation";
 import { Inter_Tight } from "next/font/google";
 import SiteFooter from "@/components/SiteFooter";
 import SiteNav from "@/components/SiteNav";
-import "./globals.css";
+import { getDictionary } from "@/dictionaries";
+import { hasLocale, LOCALES } from "@/lib/i18n";
+import "../globals.css";
 
 /* The site's one family. Only exposed as a variable: the corner mark is drawn
    with its own hard-coded Helvetica stack (rig.ts / SdMark), so nothing here
    can move it. */
 const interTight = Inter_Tight({
-  subsets: ["latin"],
+  subsets: ["latin", "latin-ext"],
   weight: ["300", "400", "700"],
   variable: "--font-inter-tight",
   display: "swap",
 });
 
-export const metadata: Metadata = {
-  title: {
-    default: "Screendibs",
-    template: "%s — Screendibs",
-  },
-  description: "Screendibs Technologies Inc. — Discover literary intellectual property and evaluate properties for film, television, streaming, and gaming adaptation.",
-};
+type Props = { params: Promise<{ lang: string }> };
+
+export const dynamicParams = false;
+
+export function generateStaticParams() {
+  return LOCALES.map((lang) => ({ lang }));
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { lang } = await params;
+  if (!hasLocale(lang)) return {};
+  return {
+    title: {
+      default: "Screendibs",
+      template: "%s — Screendibs",
+    },
+    description: getDictionary(lang).meta.siteDescription,
+    alternates: { languages: { fr: "/fr", en: "/en", "x-default": "/fr" } },
+  };
+}
 
 export const viewport: Viewport = {
   themeColor: "#EAE7DA",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
-}: Readonly<{ children: React.ReactNode }>) {
+  params,
+}: Readonly<{ children: React.ReactNode; params: Promise<{ lang: string }> }>) {
+  const { lang } = await params;
+  if (!hasLocale(lang)) notFound();
+  const dict = getDictionary(lang);
+
   return (
-    <html lang="en" className={interTight.variable}>
+    <html lang={lang === "fr" ? "fr-CA" : "en-CA"} className={interTight.variable}>
       <head>
         {/* The home page's intro locks scrolling and holds the chrome at
             opacity 0 until the canvas hands over. Without JS nothing ever hands
@@ -45,9 +66,9 @@ export default function RootLayout({
         </noscript>
       </head>
       <body>
-        <SiteNav />
+        <SiteNav lang={lang} t={dict.nav} />
         {children}
-        <SiteFooter />
+        <SiteFooter lang={lang} t={dict.footer} nav={dict.nav} />
         <div className="grain" aria-hidden="true" />
       </body>
     </html>

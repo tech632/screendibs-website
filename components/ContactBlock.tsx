@@ -1,6 +1,10 @@
 import Link from "next/link";
+import type { Dict } from "@/dictionaries";
+import { localize, type Locale } from "@/lib/i18n";
 
 interface Props {
+  lang: Locale;
+  t: Dict["contactBlock"];
   index?: string;
   heading: string;
   note?: string;
@@ -15,6 +19,8 @@ interface Props {
  * NOTE: the form has no backend yet.
  */
 export default function ContactBlock({
+  lang,
+  t,
   index,
   heading,
   note,
@@ -31,18 +37,18 @@ export default function ContactBlock({
         <input
           type="email"
           name="email"
-          placeholder="you@company.com"
-          aria-label="Email address"
+          placeholder={t.emailPlaceholder}
+          aria-label={t.emailLabel}
           required
         />
         <button className="btn btn-coral" type="submit">
-          Request access
+          {t.requestAccess}
         </button>
       </form>
 
       <p className="note">
         {note ? `${note} ` : null}
-        {linkOut ? <Link href="/contact">Go to the contact page →</Link> : null}
+        {linkOut ? <Link href={localize(lang, "/contact")}>{t.goToContact}</Link> : null}
       </p>
     </section>
   );

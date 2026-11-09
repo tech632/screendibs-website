@@ -12,11 +12,21 @@ intro is hand-written Canvas 2D.
 
 | Route | What it is |
 |---|---|
-| `/` | The company. Sear intro, then the story, ending on a contact block |
-| `/team` | Meet the team. Centred masthead over two columns, then full-height portraits alternating side to side |
-| `/contact` | Full contact form plus details |
+| `/fr`, `/en` | The company. Sear intro, then the story, ending on a contact block |
+| `/{fr,en}/about` | Company mission (verbatim company copy) |
+| `/{fr,en}/team` | Meet the team. Centred masthead over two columns, then full-height portraits alternating side to side |
+| `/{fr,en}/contact` | Full contact form plus details |
+| `/{fr,en}/terms`, `platform-terms`, `privacy`, `cookies`, `disclaimer` | Legal pages from `content/legal/` (French from `content/legal/fr/` when present) |
 
-Nav and footer are shared chrome in [layout.tsx](app/layout.tsx). The contact
+## French and English
+
+Every page lives under `app/[lang]/`. All copy is in `dictionaries/en.ts` and `dictionaries/fr.ts`
+(TypeScript makes them keep the same shape). `proxy.ts` redirects a URL without a language
+(`/`, `/about`) to the visitor's browser language, and to French when it can't tell, since
+Quebec law requires French to be offered first. The nav has a FR/EN switch that keeps the
+current page. The French copy is a draft translation and needs a French-speaking reviewer.
+
+Nav and footer are shared chrome in [layout.tsx](app/[lang]/layout.tsx). The contact
 block at the foot of the company page and the one on `/team` are the same
 component ([ContactBlock.tsx](components/ContactBlock.tsx)), so the two cannot
 drift apart.
