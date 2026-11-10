@@ -1,15 +1,13 @@
 import Link from "next/link";
-import type { Dict } from "@/dictionaries";
-import { localize, type Locale } from "@/lib/i18n";
+import type { Dictionary } from "@/lib/i18n/en";
 
 interface Props {
-  lang: Locale;
-  t: Dict["contactBlock"];
   index?: string;
   heading: string;
   note?: string;
   /** Show the "full contact page" link. Off on the contact page itself. */
   linkOut?: boolean;
+  t: Dictionary["contactBlock"];
 }
 
 /**
@@ -19,12 +17,11 @@ interface Props {
  * NOTE: the form has no backend yet.
  */
 export default function ContactBlock({
-  lang,
-  t,
   index,
   heading,
   note,
   linkOut = true,
+  t,
 }: Props) {
   return (
     <section className="section section-contact band-night" id="contact" data-nav-theme="dark">
@@ -37,18 +34,18 @@ export default function ContactBlock({
         <input
           type="email"
           name="email"
-          placeholder={t.emailPlaceholder}
+          placeholder="you@company.com"
           aria-label={t.emailLabel}
           required
         />
         <button className="btn btn-coral" type="submit">
-          {t.requestAccess}
+          {t.button}
         </button>
       </form>
 
       <p className="note">
         {note ? `${note} ` : null}
-        {linkOut ? <Link href={localize(lang, "/contact")}>{t.goToContact}</Link> : null}
+        {linkOut ? <Link href="/contact">{t.linkOut}</Link> : null}
       </p>
     </section>
   );

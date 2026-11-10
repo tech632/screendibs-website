@@ -2,25 +2,24 @@ import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import type { Metadata } from "next";
 import Link from "next/link";
-import { notFound } from "next/navigation";
 import { Fragment, type ReactNode } from "react";
-import { getDictionary } from "@/dictionaries";
-import { hasLocale, localize, type Locale } from "@/lib/i18n";
+import { getDictionary } from "@/lib/i18n";
 
 /*
  * The legal pages. Text comes from documents/legal/ in the Screendibs repo (Jonathan Nuss's
  * drafts), copied into content/legal/ by `node documents/legal/sync.mjs`. Never edit the copies.
  *
- * French versions go in content/legal/fr/ under the same file names. Until a document has one,
- * /fr shows the English text under a notice saying the French version is being prepared.
+ * French versions go in content/legal/fr/ under the same file names (drafts in
+ * drafts/legal-beta/fr/). Until a document has one, French readers get the English text under
+ * the `legal.untranslated` notice.
  */
 
 const DOCS = {
-  terms: "website-terms-of-use.md",
-  "platform-terms": "terms-of-service.md",
-  privacy: "privacy-policy.md",
-  cookies: "cookie-notice.md",
-  disclaimer: "disclaimer.md",
+  terms: { label: "Website terms", file: "website-terms-of-use.md" },
+  "platform-terms": { label: "Platform terms", file: "terms-of-service.md" },
+  privacy: { label: "Privacy", file: "privacy-policy.md" },
+  cookies: { label: "Cookies", file: "cookie-notice.md" },
+  disclaimer: { label: "Disclaimer", file: "disclaimer.md" },
 } as const;
 
 type DocKey = keyof typeof DOCS;
@@ -33,26 +32,21 @@ export function generateStaticParams() {
 
 const LEGAL_DIR = join(process.cwd(), "content", "legal");
 
-/** The document in `lang`, or the English one when there is no translation yet. */
-function read(key: DocKey, lang: Locale): { text: string; translated: boolean } {
-  if (lang !== "en") {
-    const localized = join(LEGAL_DIR, lang, DOCS[key]);
-    if (existsSync(localized)) return { text: readFileSync(localized, "utf8"), translated: true };
-  }
-  return { text: readFileSync(join(LEGAL_DIR, DOCS[key]), "utf8"), translated: lang === "en" };
-}
+const read = (key: DocKey) => readFileSync(join(LEGAL_DIR, DOCS[key].file), "utf8");
 
-const isDoc = (doc: string): doc is DocKey => doc in DOCS;
+/** The document in French when content/legal/fr/ has it, else null. */
+const readFrench = (key: DocKey) => {
+  const file = join(LEGAL_DIR, "fr", DOCS[key].file);
+  return existsSync(file) ? readFileSync(file, "utf8") : null;
+};
 
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ lang: string; doc: string }>;
+  params: Promise<{ doc: string }>;
 }): Promise<Metadata> {
-  const { lang, doc } = await params;
-  if (!hasLocale(lang) || !isDoc(doc)) return {};
-  const { text, translated } = read(doc, lang);
-  const title = (translated && text.match(/^# (.*)$/m)?.[1]) || getDictionary(lang).legal.tabs[doc];
+  const { doc } = await params;
+  const title = read(doc as DocKey).match(/^# (.*)$/m)?.[1] ?? DOCS[doc as DocKey].label;
   return { title: title.replace(/^Screendibs /, "") };
 }
 
@@ -95,34 +89,39 @@ const inline = (text: string): ReactNode =>
     ),
   );
 
-export default async function LegalPage({
-  params,
-}: {
-  params: Promise<{ lang: string; doc: string }>;
-}) {
-  const { lang, doc } = await params;
-  if (!hasLocale(lang) || !isDoc(doc)) notFound();
-  const key = doc;
-  const t = getDictionary(lang).legal;
-  const { text, translated } = read(key, lang);
+export default async function LegalPage({ params }: { params: Promise<{ doc: string }> }) {
+  const { doc } = await params;
+  const key = doc as DocKey;
+  const { locale, t } = await getDictionary();
+  const french = locale === "fr" ? readFrench(key) : null;
+  const showUntranslated = locale === "fr" && !french;
 
   return (
     <main className="page legal-page">
-      <nav className="legal-tabs" aria-label={t.navLabel}>
+      <nav className="legal-tabs" aria-label={t.legal.tabsLabel}>
         {(Object.keys(DOCS) as DocKey[]).map((k) => (
           <Link
             key={k}
-            href={localize(lang, `/${k}`)}
+            href={`/${k}`}
             className={k === key ? "is-current" : undefined}
             aria-current={k === key ? "page" : undefined}
           >
-            {t.tabs[k]}
+            {t.legal.tabs[k]}
           </Link>
         ))}
       </nav>
-      {!translated && t.untranslated ? <p className="note legal-untranslated">{t.untranslated}</p> : null}
-      <article className="legal-doc" lang={translated ? undefined : "en"}>
-        {toBlocks(text).map((b, i) => {
+      {showUntranslated && t.legal.untranslated ? (
+        <p className="note legal-lang-note" lang="fr">
+          {t.legal.untranslated}
+        </p>
+      ) : null}
+      {t.legal.englishOnly ? (
+        <p className="note legal-lang-note" lang="fr">
+          {t.legal.englishOnly}
+        </p>
+      ) : null}
+      <article className="legal-doc" lang={french ? "fr" : "en"}>
+        {toBlocks(french ?? read(key)).map((b, i) => {
           if (b.type === "ul")
             return (
               <ul key={i}>

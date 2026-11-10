@@ -59,7 +59,7 @@ La Plateforme charge des polices depuis Google Fonts et des bibliothèques logic
 
 ## Témoins du Site
 
-Le Site ne dépose aucun témoin et n’utilise aucun outil d’analyse ni de publicité. **[BÊTA]** Le Site est offert en français et en anglais. Lorsque vous visitez une adresse sans langue (par exemple screendibs.com/about), il lit le réglage de langue de votre navigateur pour en choisir une; rien n’est enregistré. Notre hébergeur, Vercel, consigne des renseignements techniques comme les adresses IP dans des journaux de serveur, à des fins de sécurité et d’exploitation. [HYPOTHÈSE : à vérifier sur le Site déployé.]
+Le Site n’utilise aucun outil d’analyse ni de publicité. **[BÊTA]** Il dépose un seul témoin fonctionnel, uniquement si vous utilisez le sélecteur de langue : « lang » (valeur « en » ou « fr », pour un an), afin que le Site reste dans la langue choisie. Sans ce témoin, le Site s’affiche en anglais. Notre hébergeur, Vercel, consigne des renseignements techniques comme les adresses IP dans des journaux de serveur, à des fins de sécurité et d’exploitation. [HYPOTHÈSE : à vérifier sur le Site déployé.]
 
 ## Comment contrôler les témoins
 

@@ -3,20 +3,24 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect } from "react";
-import type { Dict } from "@/dictionaries";
-import { localize, switchLocale, type Locale } from "@/lib/i18n";
 import SdMark from "./SdMark";
+import LangToggle from "./LangToggle";
+import type { Dictionary } from "@/lib/i18n/en";
 
-export default function SiteNav({ lang, t }: { lang: Locale; t: Dict["nav"] }) {
-  const pathname = usePathname();
-  const isHome = pathname === localize(lang, "/");
-  const links = [
-    { href: localize(lang, "/"), label: t.company },
-    { href: localize(lang, "/about"), label: t.about },
-    { href: localize(lang, "/team"), label: t.team },
+interface Props {
+  locale: "en" | "fr";
+  t: Pick<Dictionary, "nav" | "lang">;
+}
+
+export default function SiteNav({ locale, t }: Props) {
+  const LINKS = [
+    { href: "/", label: t.nav.company },
+    { href: "/about", label: t.nav.about },
+    { href: "/team", label: t.nav.team },
   ];
-  const contactHref = localize(lang, "/contact");
-  const other: Locale = lang === "fr" ? "en" : "fr";
+
+  const pathname = usePathname();
+  const isHome = pathname === "/";
 
   // The page's background walks from cream down to black; the nav's own
   // cream backdrop only reads against the cream end of that. Flip it to a
@@ -50,18 +54,18 @@ export default function SiteNav({ lang, t }: { lang: Locale; t: Dict["nav"] }) {
   }, [pathname]);
 
   return (
-    <nav className="site-nav" aria-label={t.primary}>
+    <nav className="site-nav" aria-label={t.nav.primary}>
       {/*
         On the home page the corner mark is the one the canvas seared there, so
         this is only its hit area and accessible name. Everywhere else there is
         no canvas, and the mark is drawn here.
       */}
-      <Link className="nav-mark" href={localize(lang, "/")} aria-label={t.home}>
+      <Link className="nav-mark" href="/" aria-label={t.nav.home}>
         {isHome ? <span className="nav-mark-slot" /> : <SdMark size={18} />}
       </Link>
 
       <ul>
-        {links.map((l) => (
+        {LINKS.map((l) => (
           <li key={l.href}>
             <Link
               href={l.href}
@@ -74,22 +78,14 @@ export default function SiteNav({ lang, t }: { lang: Locale; t: Dict["nav"] }) {
         ))}
         <li>
           <Link
-            className={`btn btn-sm${pathname === contactHref ? " is-current" : ""}`}
-            href={contactHref}
+            className={`btn btn-sm${pathname === "/contact" ? " is-current" : ""}`}
+            href="/contact"
           >
-            {t.contact}
+            {t.nav.contact}
           </Link>
         </li>
         <li>
-          <Link
-            className="nav-lang"
-            href={switchLocale(pathname, other)}
-            hrefLang={other}
-            lang={other}
-            aria-label={t.switchLabel}
-          >
-            {t.switchTo}
-          </Link>
+          <LangToggle locale={locale} label={t.lang.switchTo} code={t.lang.otherCode} />
         </li>
       </ul>
     </nav>

@@ -59,7 +59,7 @@ The Platform loads fonts from Google Fonts and software libraries used to build 
 
 ## Cookies on the Website
 
-The Website does not set cookies and does not use analytics or advertising tools. **[BETA]** The Website is available in French and English. When you visit an address without a language (for example screendibs.com/about), it reads your browser's language setting to choose one; nothing is stored. Our hosting provider, Vercel, records technical information such as IP addresses in server logs for security and operation. [ASSUMPTION: to be checked on the deployed Website.]
+The Website does not use analytics or advertising tools. **[BETA]** It sets one functional cookie, only if you use the language toggle: "lang" (value "en" or "fr", for one year), so that the Website stays in the language you chose. Without it the Website is shown in English. Our hosting provider, Vercel, records technical information such as IP addresses in server logs for security and operation. [ASSUMPTION: to be checked on the deployed Website.]
 
 ## How to control cookies
 

@@ -9,7 +9,7 @@ Nothing in this folder is linked from the site or the app. The live legal pages 
 | `legal-beta/disclaimer.md` | Disclaimer with a "Beta service" section. |
 | `legal-beta/beta-notice.md` | The in-app beta notice text, English and French, for sign-off. |
 | `legal-beta/cookie-notice.md` | Cookie Notice, beta version (adds the language preference and the beta-notice dismissal). |
-| `legal-beta/fr/` | French working translations of all five legal documents. Not reviewed. Once approved they go to `content/legal/fr/` (same file names), and the `/fr` legal pages pick them up automatically. |
+| `legal-beta/fr/` | French working translations of all five legal documents. Not reviewed. Once approved they go to `content/legal/fr/` (same file names), and the legal pages pick them up automatically when the visitor has chosen French. |
 | `LAWYER-REVIEW.md` | What changed and what needs a Quebec lawyer before anything is published. |
 | `website-duplication-and-i18n.md` | Content duplicated between the marketing site and the app (Vercel), and what French + English would take. |
 

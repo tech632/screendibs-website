@@ -10,9 +10,10 @@ interface Fact {
 interface Props {
   heading?: string;
   facts: Fact[];
-  chromeLabel: string;
-  /** Follows the count in the reduced-motion list: "12 total". */
-  totalLabel: string;
+  /** Label in the window chrome. */
+  label?: string;
+  /** Word after the count when every fact is shown at once. */
+  totalWord?: string;
 }
 
 const INTERVAL_MS = 3600;
@@ -33,7 +34,7 @@ const Chrome = ({ count, label }: { count: string; label: string }) => (
  * rather than immediately, so nobody arrives mid-fact. Readers who asked for
  * less motion get the whole list at once instead of a loop.
  */
-export default function FactsTicker({ heading, facts, chromeLabel, totalLabel }: Props) {
+export default function FactsTicker({ heading, facts, label = "IP facts", totalWord = "total" }: Props) {
   const ref = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(0);
   const [running, setRunning] = useState(false);
@@ -71,7 +72,7 @@ export default function FactsTicker({ heading, facts, chromeLabel, totalLabel }:
       <div ref={ref}>
         {heading ? <p className="facts-heading">{heading}</p> : null}
         <div className="facts-card">
-          <Chrome label={chromeLabel} count={`${facts.length} ${totalLabel}`} />
+          <Chrome label={label} count={`${facts.length} ${totalWord}`} />
           <ul className="facts-static">
             {facts.map((f) => (
               <li key={f.label}>
@@ -88,7 +89,7 @@ export default function FactsTicker({ heading, facts, chromeLabel, totalLabel }:
     <div className="facts-ticker" ref={ref}>
       {heading ? <p className="facts-heading">{heading}</p> : null}
       <div className="facts-card">
-        <Chrome label={chromeLabel} count={`${String(active + 1).padStart(2, "0")} / ${facts.length}`} />
+        <Chrome label={label} count={`${String(active + 1).padStart(2, "0")} / ${facts.length}`} />
         <div className="facts-body">
           <div className="facts-dots" aria-hidden>
             {facts.map((f, i) => (

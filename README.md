@@ -12,21 +12,18 @@ intro is hand-written Canvas 2D.
 
 | Route | What it is |
 |---|---|
-| `/fr`, `/en` | The company. Sear intro, then the story, ending on a contact block |
-| `/{fr,en}/about` | Company mission (verbatim company copy) |
-| `/{fr,en}/team` | Meet the team. Centred masthead over two columns, then full-height portraits alternating side to side |
-| `/{fr,en}/contact` | Full contact form plus details |
-| `/{fr,en}/terms`, `platform-terms`, `privacy`, `cookies`, `disclaimer` | Legal pages from `content/legal/` (French from `content/legal/fr/` when present) |
+| `/` | The company. Sear intro, then the story, ending on a contact block |
+| `/team` | Meet the team. Centred masthead over two columns, then full-height portraits alternating side to side |
+| `/contact` | Full contact form plus details |
 
 ## French and English
 
-Every page lives under `app/[lang]/`. All copy is in `dictionaries/en.ts` and `dictionaries/fr.ts`
-(TypeScript makes them keep the same shape). `proxy.ts` redirects a URL without a language
-(`/`, `/about`) to the visitor's browser language, and to French when it can't tell, since
-Quebec law requires French to be offered first. The nav has a FR/EN switch that keeps the
-current page. The French copy is a draft translation and needs a French-speaking reviewer.
+All copy is in `lib/i18n/en.ts` and `lib/i18n/fr.ts` (TypeScript keeps them the same shape).
+The language comes from the `lang` cookie, set by the toggle in the nav corner; English is the
+default (decided 30 Oct 2026). Legal pages show French from `content/legal/fr/` once a document
+has been translated and approved, and the English text under a notice until then.
 
-Nav and footer are shared chrome in [layout.tsx](app/[lang]/layout.tsx). The contact
+Nav and footer are shared chrome in [layout.tsx](app/layout.tsx). The contact
 block at the foot of the company page and the one on `/team` are the same
 component ([ContactBlock.tsx](components/ContactBlock.tsx)), so the two cannot
 drift apart.

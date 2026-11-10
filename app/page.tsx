@@ -1,43 +1,37 @@
 import Link from "next/link";
-import { notFound } from "next/navigation";
 import Hero from "@/components/Hero";
 import ContactBlock from "@/components/ContactBlock";
 import SearchReveal from "@/components/SearchReveal";
 import FactsTicker from "@/components/FactsTicker";
-import { getDictionary } from "@/dictionaries";
-import { hasLocale, localize } from "@/lib/i18n";
+import { getDictionary } from "@/lib/i18n";
 
 /*
  * Home = the company. The intro forges the mark, then scrolling walks through
  * what Screendibs is, and lands on a contact block.
  *
- * All copy lives in dictionaries/en.ts and fr.ts. Copy marked VERBATIM there is the company's
- * own wording (it also lives on /about) — don't copyedit it.
+ * All copy lives in lib/i18n/en.ts and fr.ts (see the VERBATIM notes there).
  */
 
-export default async function Page({ params }: { params: Promise<{ lang: string }> }) {
-  const { lang } = await params;
-  if (!hasLocale(lang)) notFound();
-  const t = getDictionary(lang);
+export default async function Page() {
+  const { t } = await getDictionary();
   const h = t.home;
-  const searchLabels = {
-    chromeLabel: t.search.chrome,
-    thinkingLabel: t.search.thinking,
-    answerLabel: t.search.found,
-  };
+  const w = t.widgets;
+  const withLabel = (items: { query: string; answer: string }[]) =>
+    items.map((it) => ({ ...it, answerLabel: w.found }));
 
   return (
     <>
-      <Hero headline={t.hero} scrollLabel={t.scrollDown} />
+      <Hero title={t.hero.title} scrollLabel={w.scrollDown} />
       <main>
         <section className="section" id="company">
           <header className="section-head">
-            <p className="section-index">{h.what.index}</p>
-            <h2>{h.what.heading}</h2>
+            <p className="section-index">{h.whatIndex}</p>
+            <h2>{h.whatTitle}</h2>
           </header>
           <div className="section-split split-right">
             <div className="split-main">
-              <p className="section-lede">{h.what.lede}</p>
+              {/* VERBATIM */}
+              <p className="section-lede">{h.whatLede}</p>
               <div className="grid">
                 {h.pillars.map((p) => (
                   <article className={`card card-${p.tone}`} key={p.title}>
@@ -51,19 +45,19 @@ export default async function Page({ params }: { params: Promise<{ lang: string 
               </div>
             </div>
             <div className="split-panel">
-              <SearchReveal items={h.whatSearches} {...searchLabels} />
+              <SearchReveal items={withLabel(h.whatSearches)} label={w.search} thinkingLabel={w.thinking} />
             </div>
           </div>
         </section>
 
         <section className="section band-deep" id="how">
           <header className="section-head">
-            <p className="section-index">{h.how.index}</p>
-            <h2>{h.how.heading}</h2>
+            <p className="section-index">{h.howIndex}</p>
+            <h2>{h.howTitle}</h2>
           </header>
           <div className="section-split split-left">
             <div className="split-panel">
-              <SearchReveal items={h.howSearches} {...searchLabels} />
+              <SearchReveal items={withLabel(h.howSearches)} label={w.search} thinkingLabel={w.thinking} />
             </div>
             <div className="split-main">
               <ol className="steps">
@@ -81,33 +75,30 @@ export default async function Page({ params }: { params: Promise<{ lang: string 
 
         <section className="section band-night" id="who" data-nav-theme="dark">
           <header className="section-head">
-            <p className="section-index">{h.who.index}</p>
+            <p className="section-index">{h.whoIndex}</p>
+            {/* VERBATIM */}
             <h2 className="statement">
-              {h.who.statementStart} <span className="accent">{h.who.statementAccent}</span>
+              {h.whoStatement[0]}{" "}
+              <span className="accent">{h.whoStatement[1]}</span>
             </h2>
           </header>
           <div className="section-split split-right">
             <div className="split-main">
               <h3 className="who-team">
-                Sd<span aria-hidden>*</span> {h.who.team}
+                Sd<span aria-hidden>*</span> Team
               </h3>
-              <p className="section-lede who-para">{h.who.para1}</p>
-              <p className="section-lede">{h.who.para2}</p>
-              <Link className="btn btn-ghost" href={localize(lang, "/team")}>
-                {h.who.meetTeam}
+              <p className="section-lede who-para">{h.whoPara}</p>
+              <p className="section-lede">{h.whoPara2}</p>
+              <Link className="btn btn-ghost" href="/team">
+                {h.meetTeam}
               </Link>
             </div>
             <div className="split-panel">
-              <FactsTicker
-                heading={h.who.factsHeading}
-                facts={h.ipFacts}
-                chromeLabel={t.facts.chrome}
-                totalLabel={t.facts.total}
-              />
+              <FactsTicker heading={h.factsHeading} facts={h.facts} label={w.facts} totalWord={w.total} />
             </div>
           </div>
           <div className="clients">
-            <p className="clients-label">{h.who.clientsLabel}</p>
+            <p className="clients-label">{h.clientsLabel}</p>
             <ul className="clients-list">
               {h.clients.map((c) => (
                 <li key={c}>{c}</li>
@@ -118,7 +109,7 @@ export default async function Page({ params }: { params: Promise<{ lang: string 
 
         <section className="section" id="why">
           <header className="section-head">
-            <p className="section-index">{h.why.index}</p>
+            <p className="section-index">{h.whyIndex}</p>
           </header>
           <div className="pitch-grid">
             {h.pitches.map((p) => (
@@ -126,7 +117,7 @@ export default async function Page({ params }: { params: Promise<{ lang: string 
                 <h3>{p.title}</h3>
                 <p>{p.body}</p>
                 <a className="btn btn-coral" href="#contact">
-                  {t.contactBlock.requestAccess}
+                  {h.requestAccess}
                 </a>
               </article>
             ))}
@@ -134,11 +125,10 @@ export default async function Page({ params }: { params: Promise<{ lang: string 
         </section>
 
         <ContactBlock
-          lang={lang}
+          index={h.contactIndex}
+          heading={h.contactHeading}
+          note={h.contactNote}
           t={t.contactBlock}
-          index={h.contact.index}
-          heading={h.contact.heading}
-          note={h.contact.note}
         />
       </main>
     </>

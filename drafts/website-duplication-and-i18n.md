@@ -33,7 +33,7 @@ Suggested direction when you're ready to merge: the site owns company content (A
 - Store the user's language in their profile so emails and reports use it.
 
 **Done 9 Nov 2026 (draft French, needs a French-speaking reviewer):**
-- Website: every page under `/fr` and `/en` (`app/[lang]/`), copy in `dictionaries/en.ts` and `fr.ts`, a FR/EN switch in the nav, `proxy.ts` sends unprefixed URLs to the browser's language (French by default), `hreflang` alternates, `html lang` set per language.
+- Website: already done on `main` on 30 Oct (copy in `lib/i18n/en.ts` and `fr.ts`, cookie toggle in the nav corner, English default). A separate `/fr` `/en` routing built on 9 Nov was dropped when `main` was merged in, keeping `main`'s version. Added on top: the French legal pages are read from `content/legal/fr/` when present. Not done: language in the URL and `hreflang` (only possible with URL-based languages).
 - App: `src/i18n/` with English text as keys and French in `fr*.js`. `npm run i18n:missing` lists untranslated strings (0 today); `npm run i18n:wrap <file>` wraps new copy. The language is saved in the user's profile; AI prompts ask for French output; French reports ask for about 15% fewer words; emails and Firebase verification emails follow the language; prices read "9,99 $ US".
 - Still to do: French Firebase email templates in the Firebase console, Stripe Checkout locale (Stripe is still simulated on `main`), and a French-speaking reviewer.
 

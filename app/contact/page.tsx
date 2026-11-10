@@ -1,34 +1,27 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
-import { getDictionary } from "@/dictionaries";
-import { hasLocale } from "@/lib/i18n";
+import { getDictionary } from "@/lib/i18n";
 
-type Props = { params: Promise<{ lang: string }> };
-
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { lang } = await params;
-  if (!hasLocale(lang)) return {};
-  const { meta } = getDictionary(lang);
-  return { title: meta.contactTitle, description: meta.contactDescription };
+export async function generateMetadata(): Promise<Metadata> {
+  const { t } = await getDictionary();
+  return { title: t.meta.contactTitle, description: t.meta.contactDescription };
 }
 
-export default async function ContactPage({ params }: Props) {
-  const { lang } = await params;
-  if (!hasLocale(lang)) notFound();
-  const c = getDictionary(lang).contact;
+/* PLACEHOLDER — none of these details are real and the form has no backend. */
+const DETAILS = [
+  { key: "general", label: "General", value: "hello@screendibs.com", href: "mailto:hello@screendibs.com" },
+  { key: "press", label: "Press", value: "press@screendibs.com", href: "mailto:press@screendibs.com" },
+  { key: "careers", label: "Careers", value: "jobs@screendibs.com", href: "mailto:jobs@screendibs.com" },
+];
 
-  /* PLACEHOLDER — none of these details are real and the form has no backend. */
-  const details = [
-    { label: c.details.general, value: "hello@screendibs.com", href: "mailto:hello@screendibs.com" },
-    { label: c.details.press, value: "press@screendibs.com", href: "mailto:press@screendibs.com" },
-    { label: c.details.careers, value: "jobs@screendibs.com", href: "mailto:jobs@screendibs.com" },
-  ];
+export default async function ContactPage() {
+  const { t } = await getDictionary();
+  const c = t.contact;
 
   return (
     <main className="page">
       <section className="contact-top">
         <p className="eyebrow">{c.eyebrow}</p>
-        <h1>{c.heading}</h1>
+        <h1>{c.title}</h1>
         <p className="lede">{c.lede}</p>
       </section>
 
@@ -43,7 +36,7 @@ export default async function ContactPage({ params }: Props) {
             <input id="c-email" name="email" type="email" required />
           </div>
           <div className="field">
-            <label htmlFor="c-org">{c.organisation}</label>
+            <label htmlFor="c-org">{c.org}</label>
             <input id="c-org" name="organisation" type="text" />
           </div>
           <div className="field">
@@ -58,9 +51,9 @@ export default async function ContactPage({ params }: Props) {
 
         <aside className="contact-aside">
           <dl className="contact-details">
-            {details.map((d) => (
+            {DETAILS.map((d) => (
               <div key={d.label}>
-                <dt>{d.label}</dt>
+                <dt>{c.details[d.key as keyof typeof c.details]}</dt>
                 <dd>
                   <a href={d.href}>{d.value}</a>
                 </dd>

@@ -4,15 +4,15 @@ import { useEffect, useRef, useState } from "react";
 
 interface Item {
   query: string;
+  answerLabel: string;
   answer: string;
 }
 
 interface Props {
   items: Item[];
-  chromeLabel: string;
-  thinkingLabel: string;
-  /** Shown over every answer ("Found it"). */
-  answerLabel: string;
+  thinkingLabel?: string;
+  /** Label in the window chrome. */
+  label?: string;
 }
 
 type Phase = "idle" | "typing" | "thinking" | "answer";
@@ -36,9 +36,8 @@ const Chrome = ({ label }: { label: string }) => (
  */
 export default function SearchReveal({
   items,
-  chromeLabel,
-  thinkingLabel,
-  answerLabel,
+  thinkingLabel = "Checking the shelf…",
+  label = "Search",
 }: Props) {
   const ref = useRef<HTMLDivElement>(null);
   const [index, setIndex] = useState(0);
@@ -105,7 +104,7 @@ export default function SearchReveal({
     return (
       <div className="search-reveal is-reduced" ref={ref}>
         <div className="search-card">
-          <Chrome label={chromeLabel} />
+          <Chrome label={label} />
           {items.map((it) => (
             <div className="search-static" key={it.query}>
               <p className="search-static-q">
@@ -118,7 +117,7 @@ export default function SearchReveal({
                 <span className="search-answer-ic" aria-hidden>
                   *
                 </span>
-                {answerLabel}
+                {it.answerLabel}
               </span>
               <p className="search-static-a">{it.answer}</p>
             </div>
@@ -131,7 +130,7 @@ export default function SearchReveal({
   return (
     <div className={`search-reveal is-${phase}`} ref={ref}>
       <div className="search-card">
-        <Chrome label={chromeLabel} />
+        <Chrome label={label} />
         <div className="search-box">
           <span className="search-ic" aria-hidden>
             *
@@ -169,7 +168,7 @@ export default function SearchReveal({
                 <span className="search-answer-ic" aria-hidden>
                   *
                 </span>
-                {answerLabel}
+                {it.answerLabel}
               </span>
               <p>{it.answer}</p>
             </div>
