@@ -142,3 +142,17 @@ http://localhost:3000/?t=1.9    # wavefront opening from the corner
 Everything below the hero — headline, pillars, steps, the access form — is
 **placeholder copy** standing in the mark's visual language. The form is not
 wired to a backend. Swap the words; the layout will hold.
+
+## Weekly newsletter
+
+`/newsletter` shows the latest issue and lists every issue by week, latest on top. Each issue is one file in `content/newsletter/`, named for the Monday of its week.
+
+To add the week's issue:
+
+1. Paste the four selected LinkedIn posts, one after another and exactly as posted, into a text file (say `posts.txt`). Each post must keep its hashtag line: that is how the script tells where a post ends.
+2. Run `npm run newsletter -- posts.txt`. It writes `content/newsletter/<Monday of this week>.md`. Use `--week 2026-11-16` for another week and `--publish 2026-11-20` for another go-live date.
+3. Read the file over, then commit and push it.
+
+The issue goes live on its `publish:` date, by default the Friday of its week at midnight in Montreal, with no further deploy. Until then it is not listed and its page returns 404, so the file can be pushed any day of the week.
+
+The script never changes the wording. It drops the hashtags, turns the quoted line into the pull quote, and turns the "Why it matters:" line and the three emoji lines under it into a subheading and a list.

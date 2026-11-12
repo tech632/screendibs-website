@@ -4,8 +4,12 @@ import { join } from "node:path";
 /*
  * The weekly newsletter: the four LinkedIn posts selected each week, one after
  * another. One file per issue in content/newsletter/, named for the Monday of
- * its week (2026-11-09.md). To publish an issue, add a file; the archive and
- * the issue page pick it up on the next deploy.
+ * its week (2026-11-09.md). `npm run newsletter -- posts.txt` writes that file
+ * from the pasted posts (scripts/new-issue.mjs).
+ *
+ * An issue goes live on its `publish:` date (front matter), by default the
+ * Friday of its week, at midnight in Montreal. Pages render per request, so a
+ * file committed earlier in the week appears on Friday with no new deploy.
  *
  * Each post in a file is:
  *   ## Title
@@ -30,11 +34,26 @@ export interface Post {
 export interface Issue {
   /** The Monday of the issue's week, YYYY-MM-DD. Also its URL slug. */
   week: string;
+  /** The day it goes live, YYYY-MM-DD (Montreal time). */
+  publish: string;
   posts: Post[];
 }
 
+function addDays(date: string, n: number): string {
+  const d = new Date(`${date}T00:00:00Z`);
+  d.setUTCDate(d.getUTCDate() + n);
+  return d.toISOString().slice(0, 10);
+}
+
+/** Today's date in Montreal, YYYY-MM-DD. */
+const today = () =>
+  new Intl.DateTimeFormat("en-CA", { timeZone: "America/Toronto" }).format(new Date());
+
 function parse(week: string, md: string): Issue {
-  const body = md.replace(/\r\n/g, "\n").replace(/^---\n[\s\S]*?\n---\n/, "");
+  const text = md.replace(/\r\n/g, "\n");
+  const front = text.match(/^---\n([\s\S]*?)\n---\n/)?.[1] ?? "";
+  const publish = front.match(/^publish:\s*(\d{4}-\d{2}-\d{2})\s*$/m)?.[1] ?? addDays(week, 4);
+  const body = text.replace(/^---\n[\s\S]*?\n---\n/, "");
   const posts: Post[] = [];
   let post: Post | null = null;
   let open: Block | null = null;
@@ -66,11 +85,11 @@ function parse(week: string, md: string): Issue {
       post.blocks.push((open = { type: "p", text: line }));
     }
   }
-  return { week, posts };
+  return { week, publish, posts };
 }
 
-/** Every issue, latest first. */
-export function getIssues(): Issue[] {
+/** Every issue on file, latest first, including ones not live yet. */
+export function getAllIssues(): Issue[] {
   let files: string[] = [];
   try {
     files = readdirSync(DIR);
@@ -82,6 +101,12 @@ export function getIssues(): Issue[] {
     .sort()
     .reverse()
     .map((f) => parse(f.slice(0, 10), readFileSync(join(DIR, f), "utf8")));
+}
+
+/** The issues that are live today, latest first. */
+export function getIssues(): Issue[] {
+  const now = today();
+  return getAllIssues().filter((i) => i.publish <= now);
 }
 
 export function getIssue(week: string): Issue | undefined {

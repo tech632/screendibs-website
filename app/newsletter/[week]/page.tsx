@@ -4,12 +4,13 @@ import { notFound } from "next/navigation";
 import NewsletterArchive from "@/components/NewsletterArchive";
 import NewsletterIssue from "@/components/NewsletterIssue";
 import { getDictionary } from "@/lib/i18n";
-import { getIssue, getIssues, weekLabel } from "@/lib/newsletter";
+import { getAllIssues, getIssue, getIssues, weekLabel } from "@/lib/newsletter";
 
 export const dynamicParams = false;
 
+/* Scheduled issues get a route too; the page 404s until their publish date. */
 export function generateStaticParams() {
-  return getIssues().map((i) => ({ week: i.week }));
+  return getAllIssues().map((i) => ({ week: i.week }));
 }
 
 export async function generateMetadata({
