@@ -16,12 +16,16 @@ const en = {
     teamDescription: "The people behind Screendibs.",
     contactTitle: "Contact",
     contactDescription: "Talk to Screendibs.",
+    newsletterTitle: "Newsletter",
+    newsletterDescription:
+      "The Screendibs weekly: four stories on books, rights and adaptations, every Friday.",
   },
 
   nav: {
     company: "Company",
     about: "About",
     team: "Team",
+    newsletter: "Newsletter",
     contact: "Contact",
     home: "Screendibs — home",
     primary: "Primary",
@@ -320,6 +324,18 @@ const en = {
     studio: "Studio",
     studioPlace: "Montreal, Canada",
     visits: "Visits by appointment.",
+  },
+
+  newsletter: {
+    eyebrow: "The Screendibs weekly",
+    title: "Newsletter",
+    lede: "Every Friday, the four stories from our week on LinkedIn: what got optioned, who is buying, and what it means for your next adaptation.",
+    englishOnly: "",
+    weekOf: "Week of",
+    latest: "Latest issue",
+    published: "Published",
+    archive: "Past issues",
+    empty: "The first issue is on its way.",
   },
 
   legal: {

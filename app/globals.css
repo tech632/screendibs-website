@@ -1834,3 +1834,188 @@ main {
     display: none;
   }
 }
+
+/* Phones: the newsletter is still in the footer, so its nav link goes first. */
+@media (max-width: 560px) {
+  .site-nav ul li.nav-wide-only {
+    display: none;
+  }
+}
+
+/* ------------------------------------------------------------ newsletter --- */
+
+.newsletter-page {
+  padding-left: var(--gutter);
+  padding-right: var(--gutter);
+  padding-bottom: var(--band-pad);
+}
+
+.nl-top {
+  max-width: 52em;
+  margin-bottom: clamp(48px, 7vw, 112px);
+}
+
+.nl-top h1 {
+  margin: 0 0 clamp(20px, 2.4vw, 32px);
+  font-size: var(--fs-display);
+  font-weight: 300;
+  line-height: 0.95;
+  letter-spacing: -0.035em;
+}
+
+.nl-issue-head,
+.nl-archive > h2 {
+  padding-top: 18px;
+  border-top: 1px solid var(--ink);
+}
+
+.nl-issue-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px 24px;
+  margin-bottom: clamp(32px, 4vw, 56px);
+}
+
+.nl-issue-head h2,
+.nl-archive > h2 {
+  margin: 0;
+  font-size: var(--fs-h3);
+  font-weight: 300;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+
+.nl-meta {
+  margin: 0;
+  font-size: var(--fs-label);
+  color: var(--ink-soft);
+}
+
+.nl-post {
+  display: grid;
+  grid-template-columns: minmax(48px, 1fr) minmax(0, 4fr);
+  gap: 0 var(--gutter);
+  padding: clamp(32px, 4vw, 56px) 0;
+  border-top: 1px solid var(--rule);
+}
+
+.nl-post-n {
+  margin: 0;
+  font-size: var(--fs-label);
+  color: var(--coral-deep);
+}
+
+.nl-post-body {
+  max-width: 44em;
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+
+.nl-post-title {
+  margin: 0 0 0.5em;
+  font-size: var(--fs-item);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+}
+
+.nl-hook {
+  margin: 0 0 1em;
+  font-size: var(--fs-body);
+  line-height: 1.35;
+  color: var(--ink);
+}
+
+.nl-post-body p,
+.nl-post-body ul {
+  margin: 0 0 1em;
+}
+
+.nl-post-body ul {
+  padding-left: 1.2em;
+}
+
+.nl-post-body li + li {
+  margin-top: 0.4em;
+}
+
+.nl-post-body h4 {
+  margin: 1.4em 0 0.5em;
+  font-size: 17px;
+  color: var(--ink);
+}
+
+.nl-post-body strong {
+  color: var(--ink);
+}
+
+.nl-quote {
+  margin: 1.6em 0 0;
+  padding-left: 20px;
+  border-left: 3px solid var(--sage);
+  font-size: var(--fs-body);
+  font-weight: 300;
+  line-height: 1.3;
+  color: var(--ink);
+}
+
+.nl-quote strong {
+  font-weight: 700;
+  color: var(--coral-deep);
+}
+
+.nl-archive {
+  margin-top: clamp(64px, 9vw, 140px);
+}
+
+.nl-archive > h2 {
+  margin-bottom: 8px;
+}
+
+.nl-past {
+  border-bottom: 1px solid var(--rule);
+}
+
+.nl-past summary {
+  display: grid;
+  grid-template-columns: minmax(48px, 1fr) minmax(0, 4fr);
+  gap: 6px var(--gutter);
+  padding: 22px 0;
+  cursor: pointer;
+  list-style: none;
+}
+
+.nl-past summary::-webkit-details-marker {
+  display: none;
+}
+
+.nl-past-week {
+  font-size: var(--fs-label);
+  color: var(--ink);
+}
+
+.nl-past summary:hover .nl-past-week,
+.nl-past[open] .nl-past-week {
+  color: var(--coral-deep);
+}
+
+.nl-past-titles {
+  display: grid;
+  gap: 4px;
+  font-size: 16px;
+  color: var(--ink-soft);
+}
+
+@media (max-width: 780px) {
+  .nl-post,
+  .nl-past summary {
+    grid-template-columns: 1fr;
+  }
+  .nl-post-n {
+    margin-bottom: 8px;
+  }
+}

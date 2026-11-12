@@ -17,12 +17,16 @@ const fr: Dictionary = {
     teamDescription: "L’équipe derrière Screendibs.",
     contactTitle: "Contact",
     contactDescription: "Échangez avec Screendibs.",
+    newsletterTitle: "Infolettre",
+    newsletterDescription:
+      "L’hebdo Screendibs : quatre histoires sur les livres, les droits et les adaptations, chaque vendredi.",
   },
 
   nav: {
     company: "Entreprise",
     about: "À propos",
     team: "Équipe",
+    newsletter: "Infolettre",
     contact: "Contact",
     home: "Screendibs — accueil",
     primary: "Navigation principale",
@@ -316,6 +320,18 @@ const fr: Dictionary = {
     studio: "Studio",
     studioPlace: "Montréal, Canada",
     visits: "Visites sur rendez-vous.",
+  },
+
+  newsletter: {
+    eyebrow: "L’hebdo Screendibs",
+    title: "Infolettre",
+    lede: "Chaque vendredi, les quatre histoires de notre semaine sur LinkedIn : ce qui a été optionné, qui achète, et ce que cela change pour votre prochaine adaptation.",
+    englishOnly: "Les articles de l’infolettre sont publiés en anglais.",
+    weekOf: "Semaine du",
+    latest: "Dernier numéro",
+    published: "Publié le",
+    archive: "Numéros précédents",
+    empty: "Le premier numéro arrive bientôt.",
   },
 
   legal: {
