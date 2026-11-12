@@ -1834,3 +1834,197 @@ main {
     display: none;
   }
 }
+
+/* ------------------------------------------------------------ newsletter --- */
+
+/* The weekly issue: a short masthead, then the week's posts as alternating
+   bands (title and pull quote beside a narrow column of copy), then the
+   archive of every issue, latest on top. */
+
+.nl-top {
+  padding: 0 var(--gutter) var(--band-pad);
+}
+
+.nl-top .eyebrow a:hover {
+  color: var(--coral-deep);
+}
+
+.nl-top h1 {
+  margin: 0 0 clamp(20px, 2.4vw, 32px);
+  font-size: var(--fs-display);
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.nl-empty {
+  margin: 0;
+  padding: 0 var(--gutter) var(--band-pad);
+  font-size: var(--fs-body);
+  color: var(--ink-soft);
+}
+
+.nl-post {
+  --tone: var(--coral-deep);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 560px);
+  justify-content: space-between;
+  column-gap: clamp(28px, 6vw, 96px);
+  align-items: start;
+  padding: var(--band-pad) var(--gutter);
+}
+
+.nl-post.tone-sage { --tone: var(--sage-deep); }
+.nl-post.tone-peri { --tone: var(--peri-deep); }
+
+.nl-post:nth-child(odd) {
+  background: var(--cream-deep);
+}
+
+.nl-post-n {
+  margin: 0 0 clamp(14px, 1.6vw, 22px);
+  font-size: var(--fs-label);
+  line-height: 1.2;
+  color: var(--tone);
+  font-variant-numeric: tabular-nums;
+}
+
+.nl-post-head h2 {
+  margin: 0;
+  max-width: 14em;
+  font-size: var(--fs-h3);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+.nl-quote {
+  margin: clamp(28px, 3.4vw, 48px) 0 0;
+  padding-left: clamp(16px, 1.6vw, 24px);
+  border-left: 3px solid var(--tone);
+  max-width: 22em;
+}
+
+.nl-quote p {
+  margin: 0;
+  font-size: var(--fs-item);
+  font-weight: 300;
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+
+.nl-post-body {
+  font-size: var(--fs-body);
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+  color: var(--ink-soft);
+}
+
+.nl-post-body > * {
+  margin: 0;
+}
+
+.nl-post-body > * + * {
+  margin-top: 1em;
+}
+
+/* The opening line of a post is its hook. */
+.nl-post-body > p:first-child {
+  color: var(--ink);
+}
+
+.nl-post-body h3 {
+  margin-top: 1.6em;
+  font-size: inherit;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.nl-post-body ul {
+  padding: 0;
+  list-style: none;
+}
+
+.nl-post-body li + li {
+  margin-top: 0.7em;
+}
+
+.nl-post-body strong {
+  color: var(--ink);
+}
+
+.nl-archive {
+  padding: var(--band-pad) var(--gutter);
+}
+
+/* The band before it may itself be the tinted one; a rule keeps them apart. */
+.nl-archive {
+  border-top: 1px solid var(--rule);
+}
+
+.nl-archive h2 {
+  margin: 0 0 clamp(28px, 3.4vw, 48px);
+  font-size: var(--fs-h3);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.nl-archive-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--rule);
+}
+
+.nl-archive-list a {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 560px);
+  justify-content: space-between;
+  column-gap: clamp(28px, 6vw, 96px);
+  padding: clamp(20px, 2.4vw, 32px) 0;
+  border-bottom: 1px solid var(--rule);
+  color: inherit;
+  text-decoration: none;
+}
+
+.nl-archive-week {
+  font-size: var(--fs-item);
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+  transition: color 0.25s ease;
+}
+
+.nl-archive-list a:hover .nl-archive-week,
+.nl-archive-list a[aria-current="page"] .nl-archive-week {
+  color: var(--coral-deep);
+}
+
+.nl-archive-latest {
+  margin-left: 0.8em;
+  font-size: 14px;
+  letter-spacing: 0;
+  color: var(--ink-soft);
+}
+
+.nl-archive-titles {
+  display: grid;
+  gap: 0.35em;
+  font-size: 16px;
+  line-height: 1.35;
+  color: var(--ink-soft);
+}
+
+@media (max-width: 860px) {
+  .nl-post,
+  .nl-archive-list a {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: clamp(20px, 5vw, 32px);
+  }
+
+  .nl-archive-list a {
+    row-gap: 10px;
+  }
+}

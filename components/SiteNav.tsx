@@ -17,10 +17,14 @@ export default function SiteNav({ locale, t }: Props) {
     { href: "/", label: t.nav.company },
     { href: "/about", label: t.nav.about },
     { href: "/team", label: t.nav.team },
+    { href: "/newsletter", label: t.nav.newsletter },
   ];
 
   const pathname = usePathname();
   const isHome = pathname === "/";
+  // An issue page (/newsletter/2026-11-09) still belongs to its section.
+  const isCurrent = (href: string) =>
+    href === "/" ? isHome : pathname === href || pathname.startsWith(`${href}/`);
 
   // The page's background walks from cream down to black; the nav's own
   // cream backdrop only reads against the cream end of that. Flip it to a
@@ -69,8 +73,8 @@ export default function SiteNav({ locale, t }: Props) {
           <li key={l.href}>
             <Link
               href={l.href}
-              className={pathname === l.href ? "is-current" : undefined}
-              aria-current={pathname === l.href ? "page" : undefined}
+              className={isCurrent(l.href) ? "is-current" : undefined}
+              aria-current={isCurrent(l.href) ? "page" : undefined}
             >
               {l.label}
             </Link>

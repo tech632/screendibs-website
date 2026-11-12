@@ -15,6 +15,9 @@ const fr: Dictionary = {
       "Screendibs rend la découverte et l’évaluation de la propriété intellectuelle adaptable plus efficaces, logiques et concrètes pour l’industrie du divertissement.",
     teamTitle: "Équipe",
     teamDescription: "L’équipe derrière Screendibs.",
+    newsletterTitle: "Infolettre",
+    newsletterDescription:
+      "L’hebdo Screendibs : quatre sujets sur les livres, les droits et les adaptations à l’écran, chaque vendredi.",
     contactTitle: "Contact",
     contactDescription: "Échangez avec Screendibs.",
   },
@@ -23,6 +26,7 @@ const fr: Dictionary = {
     company: "Entreprise",
     about: "À propos",
     team: "Équipe",
+    newsletter: "Infolettre",
     contact: "Contact",
     home: "Screendibs — accueil",
     primary: "Navigation principale",
@@ -316,6 +320,17 @@ const fr: Dictionary = {
     studio: "Studio",
     studioPlace: "Montréal, Canada",
     visits: "Visites sur rendez-vous.",
+  },
+
+  newsletter: {
+    eyebrow: "Infolettre Sd*",
+    title: "Infolettre",
+    lede: "Quatre sujets par semaine sur les livres, les droits et les adaptations à l’écran. Un nouveau numéro chaque vendredi.",
+    weekOf: "Semaine du",
+    latest: "Dernier numéro",
+    archiveTitle: "Tous les numéros",
+    empty: "Le premier numéro arrive bientôt.",
+    englishOnly: "L’infolettre est pour l’instant publiée en anglais uniquement.",
   },
 
   legal: {

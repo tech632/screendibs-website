@@ -15,6 +15,7 @@ export default function SiteFooter({ t }: { t: Pick<Dictionary, "nav" | "footer"
         <Link href="/">{t.nav.company}</Link>
         <Link href="/about">{t.nav.about}</Link>
         <Link href="/team">{t.nav.team}</Link>
+        <Link href="/newsletter">{t.nav.newsletter}</Link>
         <Link href="/contact">{t.nav.contact}</Link>
         <Link href="/terms">{t.footer.terms}</Link>
         <Link href="/privacy">{t.footer.privacy}</Link>
