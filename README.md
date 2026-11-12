@@ -15,6 +15,7 @@ intro is hand-written Canvas 2D.
 | `/` | The company. Sear intro, then the story, ending on a contact block |
 | `/team` | Meet the team. Centred masthead over two columns, then full-height portraits alternating side to side |
 | `/contact` | Full contact form plus details |
+| `/newsletter` | The weekly newsletter: latest issue in full, past issues below |
 
 Nav and footer are shared chrome in [layout.tsx](app/layout.tsx). The contact
 block at the foot of the company page and the one on `/team` are the same
@@ -142,3 +143,33 @@ http://localhost:3000/?t=1.9    # wavefront opening from the corner
 Everything below the hero — headline, pillars, steps, the access form — is
 **placeholder copy** standing in the mark's visual language. The form is not
 wired to a backend. Swap the words; the layout will hold.
+
+## Newsletter
+
+`/newsletter` is the four LinkedIn posts chosen each week, published on
+Fridays. One file per week in `content/newsletter/`, named after that week's
+Monday (`2026-11-09.md`). The latest issue shows in full; every older one
+stays listed below it under "Past issues". The parser and format are in
+[lib/newsletter.ts](lib/newsletter.ts).
+
+To add the week's issue, paste the posts (as written for LinkedIn, hashtags
+and all) into a text file and run:
+
+```bash
+npm run newsletter -- posts.txt                 # this week
+npm run newsletter -- posts.txt --week 2026-11-16
+npm run newsletter -- --doc <googleDocId>       # straight from a link-shared Google Doc
+```
+
+Check the generated file, commit, and push. The deploy puts it live.
+
+**Every Friday, automatically:** [.github/workflows/newsletter.yml](.github/workflows/newsletter.yml)
+runs the script at 9:00 Paris time against the Google Doc in the repo variable
+`NEWSLETTER_DOC_ID` (the doc must be shared "anyone with the link can view"),
+then commits the new issue to `main`. It skips quietly if the variable isn't set
+or the week's issue already exists. It can also be run by hand from the Actions
+tab with a doc ID.
+
+The newsletter is free for now. The plan is to put it behind a subscription
+after a first free month; gate the past issues in
+[app/newsletter/page.tsx](app/newsletter/page.tsx) when that happens.

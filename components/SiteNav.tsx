@@ -17,6 +17,7 @@ export default function SiteNav({ locale, t }: Props) {
     { href: "/", label: t.nav.company },
     { href: "/about", label: t.nav.about },
     { href: "/team", label: t.nav.team },
+    { href: "/newsletter", label: t.nav.newsletter, narrow: false },
   ];
 
   const pathname = usePathname();
@@ -66,7 +67,7 @@ export default function SiteNav({ locale, t }: Props) {
 
       <ul>
         {LINKS.map((l) => (
-          <li key={l.href}>
+          <li key={l.href} className={"narrow" in l ? "nav-wide-only" : undefined}>
             <Link
               href={l.href}
               className={pathname === l.href ? "is-current" : undefined}
