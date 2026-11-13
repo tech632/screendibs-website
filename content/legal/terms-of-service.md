@@ -99,7 +99,7 @@ You agree not to, and not to help anyone else to:
 
 - copy, scrape, crawl, harvest or extract content or data from the Service by automated means, or in bulk, except through features we expressly provide for that purpose;
 - resell, rent, sublicense or otherwise make the Service or its content available to anyone outside the permitted use described in section 9;
-- share your account, or create several accounts, to obtain additional free unlocks, launch offers, promotional codes or plan quotas;
+- share your account, or create several accounts, to obtain additional free trials, free unlocks, promotional codes or plan quotas;
 - bypass or interfere with any paywall, quota, rate limit, security measure or access control;
 - reverse engineer, decompile or disassemble the Service, except to the extent the law expressly allows this despite this restriction;
 - use the Service or its outputs to develop, train or improve a competing product, dataset or AI model;
@@ -171,10 +171,10 @@ If you are a rights holder and believe that information on the Service about you
 
 Prices are shown in **United States dollars (USD)** in the Service before you buy. The prices at the date of these Terms are:
 
-- **Free:** search [ASSUMPTION: the app currently shows "10 searches per month" for free accounts; Ben and Jon to confirm the free search allowance at launch], details pages for public-domain works, and one free title unlock per rolling 24-hour period [ASSUMPTION: the code grants this permanently to free users; the launch plan describes it as part of the launch offer. Confirm which].
-- **One-off reports:** Scout Report $9.99; Deep Dive $25; Premium $50.
-- **Unlock pack:** $5 for five title unlocks.
-- **Monthly plans:** Scout $29 per month; Deep Dive $79 per month; Premium $199 per month. The reports and other features included in each plan are described on the pricing page at the time you subscribe.
+- **Free:** unlimited search, subject to fair use [ASSUMPTION: the app limits each account to about 4 searches per minute to stop automated use], details pages for public-domain works, and, during the free trial described in section 12, details pages for all works.
+- **One-off reports:** Scout Report $9.99; Deep Dive $18.99; Premium $199.99. [DECISION for John and Jon: the Premium one-off price was raised from $50 so that three Premium reports cost more than the Premium plan.]
+- **Title unlock:** $9.99 for the details page of one work that is not in the public domain. [ASSUMPTION: the app sells single unlocks only, with no unlock packs at launch. If confirmed, remove the references to packs and credits below.]
+- **Monthly plans:** Scout $24.99 per month; Deep Dive $54.99 per month; Premium $599 per month, arranged with us directly ("Contact us"). The reports and other features included in each plan are described on the pricing page at the time you subscribe.
 
 [DECISION for Jon: whether prices include or exclude taxes. ASSUMPTION drafted here: prices exclude applicable sales taxes (such as GST, HST, QST or VAT), which are added at checkout where we are required to collect them.]
 
@@ -206,7 +206,7 @@ Reports included in a plan are counted per monthly billing period. Unused quota 
 - **Changing plans.** [ASSUMPTION, to match the Stripe portal configuration: upgrades take effect immediately, and Stripe charges the prorated difference for the rest of the current period; downgrades take effect at the next renewal.]
 - **Price changes.** We will give you at least 30 days' notice by email before a price change applies to your plan. The new price applies from your first renewal after the notice period. If you do not agree, you can cancel before the change takes effect at no cost.
 - **Failed payments.** If a renewal payment fails, Stripe may try again. If payment still fails, we may suspend or cancel the plan and move your account to the free features.
-- **Free trials.** [ASSUMPTION: no free trial at launch.]
+- **Free trial.** For 30 days after you create your account, a free account can open the details page of every work, not only public-domain works. The trial does not include reports, needs no payment card and ends automatically: nothing is charged when it ends. After it, the details page of a work that is not in the public domain needs a monthly plan or a title unlock; search and public-domain details pages stay free. One free trial per person. [Decided by John Feifer, 10 November 2026. Jon to review.]
 
 ## 13. Refunds
 
@@ -245,13 +245,7 @@ You also keep your legal rights if digital content or a digital service does not
 
 ### Launch offer
 
-From **1 November 2026 to 31 December 2026** [ASSUMPTION: from 00:00 on 1 November to 23:59 on 31 December, Montreal time (Eastern Time)]:
-
-- **50% off the first month** of any monthly plan. The discount applies to the first monthly billing period only. The plan then renews at the full monthly price shown at checkout, unless you cancel. [ASSUMPTION: once per customer, for new subscribers only.]
-- **20% off** one-off reports and unlock packs purchased during the offer period.
-- **One free title unlock per day.** [ASSUMPTION: "per day" means one per rolling 24-hour period, as in the app. See section 11 on whether this continues after 31 December 2026.]
-
-[PLACEHOLDER: the launch offer does not yet appear in the app code reviewed on 23 October 2026. Ben to confirm how it will be applied, for example by automatic discount or promotional code.]
+[DECISION (John Feifer, 10 November 2026): the discounts first drafted here (50% off the first month of a plan, 20% off one-off reports and unlock packs, one free title unlock per day) are dropped. At launch, search is free for everyone and new accounts get the 30-day free trial in section 12. Jon to confirm whether to delete this section or keep the heading for future promotions.]
 
 ### Promotional codes
 
