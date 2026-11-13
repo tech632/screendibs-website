@@ -2,6 +2,7 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import type { Metadata } from "next";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 import { Fragment, type ReactNode } from "react";
 import { getDictionary } from "@/lib/i18n";
 
@@ -20,6 +21,10 @@ const DOCS = {
 
 type DocKey = keyof typeof DOCS;
 
+/* Pages read the language cookie, so they render per request and dynamicParams alone
+ * doesn't stop unknown paths (/foo, bot probes) reaching here; 404 them explicitly. */
+const isDoc = (doc: string): doc is DocKey => Object.hasOwn(DOCS, doc);
+
 export const dynamicParams = false;
 
 export function generateStaticParams() {
@@ -35,7 +40,8 @@ export async function generateMetadata({
   params: Promise<{ doc: string }>;
 }): Promise<Metadata> {
   const { doc } = await params;
-  const title = read(doc as DocKey).match(/^# (.*)$/m)?.[1] ?? DOCS[doc as DocKey].label;
+  if (!isDoc(doc)) notFound();
+  const title = read(doc).match(/^# (.*)$/m)?.[1] ?? DOCS[doc].label;
   return { title: title.replace(/^Screendibs /, "") };
 }
 
@@ -80,7 +86,8 @@ const inline = (text: string): ReactNode =>
 
 export default async function LegalPage({ params }: { params: Promise<{ doc: string }> }) {
   const { doc } = await params;
-  const key = doc as DocKey;
+  if (!isDoc(doc)) notFound();
+  const key = doc;
   const { t } = await getDictionary();
 
   return (

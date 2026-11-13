@@ -19,10 +19,12 @@ export async function generateMetadata({
   params: Promise<{ week: string }>;
 }): Promise<Metadata> {
   const { week } = await params;
+  const issue = getIssue(week);
+  if (!issue) notFound();
   const { locale, t } = await getDictionary();
   return {
-    title: `${t.meta.newsletterTitle}: ${t.newsletter.weekOf.toLowerCase()} ${weekLabel(week, locale)}`,
-    description: getIssue(week)?.posts.map((p) => p.title).join(" · "),
+    title: `${t.meta.newsletterTitle}: ${t.newsletter.weekOf.toLowerCase()} ${weekLabel(issue.week, locale)}`,
+    description: issue.posts.map((p) => p.title).join(" · "),
   };
 }
 
