@@ -58,6 +58,7 @@ const en = {
     facts: "IP facts",
     total: "total",
     scrollDown: "Scroll down",
+    reel: { play: "Play", pause: "Pause", soundOn: "Sound on", soundOff: "Sound off" },
   },
 
   hero: {
@@ -103,6 +104,14 @@ const en = {
         body: "Export in-depth investor-ready IP reports detailing the property, the adaptation rights, chain-of-title, and comparable market analytics.",
       },
     ],
+    /* The Reel under the steps. tourBody is the caption the Reel was posted
+       with on Instagram. */
+    tourLabel: "Watch — 46 seconds",
+    tourTitle: "The full tour.",
+    tourBody:
+      "Every great adaptation starts with a book. Search it, score it, and get the report: one, three or five pages.",
+    tourAlt:
+      "Screendibs Reel: a search for Frankenstein, its adaptability score of 94 out of 100, and the one, three and five page reports.",
     whoIndex: "03 — Who",
     /* VERBATIM — the second part is the accent span. */
     whoStatement: ["Screendibs is positioned at the", "intersection of technology, literature and Entertainment."],

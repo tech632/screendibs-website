@@ -3,6 +3,7 @@ import Hero from "@/components/Hero";
 import ContactBlock from "@/components/ContactBlock";
 import SearchReveal from "@/components/SearchReveal";
 import FactsTicker from "@/components/FactsTicker";
+import ReelPlayer from "@/components/ReelPlayer";
 import { getDictionary } from "@/lib/i18n";
 
 /*
@@ -69,6 +70,24 @@ export default async function Page() {
                   </li>
                 ))}
               </ol>
+            </div>
+          </div>
+
+          {/* The first Reel of the Instagram series: the same three steps,
+              shown on one book. */}
+          <div className="section-split split-right tour" id="tour">
+            <div className="split-main">
+              <p className="section-index">{h.tourLabel}</p>
+              <h3 className="tour-title">{h.tourTitle}</h3>
+              <p className="section-lede">{h.tourBody}</p>
+            </div>
+            <div className="split-panel">
+              <ReelPlayer
+                src="/reels/full-tour-frankenstein.mp4"
+                poster="/reels/full-tour-frankenstein.jpg"
+                label={h.tourAlt}
+                labels={w.reel}
+              />
             </div>
           </div>
         </section>

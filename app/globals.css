@@ -798,6 +798,73 @@ main {
   }
 }
 
+/* ------------------------------------------------------------------- reel --- */
+
+/* The Reel row closes the How section: copy on the left, the vertical video
+   on the right, so the panel swaps sides from the steps row above it. */
+.tour {
+  margin-top: clamp(72px, 10vw, 152px);
+  align-items: center;
+}
+
+.tour-title {
+  margin: 0 0 clamp(20px, 2.4vw, 32px);
+  font-size: var(--fs-h3);
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.tour .section-lede {
+  margin-bottom: 0;
+}
+
+.reel {
+  width: 100%;
+  max-width: 340px;
+  margin-left: auto;
+}
+
+.reel-video {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 9 / 16;
+  border-radius: 28px;
+  background: var(--night);
+  box-shadow: 0 1px 2px rgba(17, 17, 17, 0.05), 0 28px 56px -28px rgba(17, 17, 17, 0.45);
+  cursor: pointer;
+}
+
+.reel-controls {
+  display: flex;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.reel-btn {
+  padding: 9px 17px;
+  border-radius: 999px;
+  border: 1px solid var(--rule);
+  background: transparent;
+  color: var(--ink);
+  font-family: inherit;
+  font-size: 14px;
+  letter-spacing: -0.01em;
+  cursor: pointer;
+  transition: border-color 0.3s ease;
+}
+
+.reel-btn:hover {
+  border-color: var(--ink);
+}
+
+@media (max-width: 860px) {
+  .reel {
+    margin-left: 0;
+  }
+}
+
 /* ---------------------------------------------------------- search reveal --- */
 
 /* A staged, looping demo in the side panel: query types itself out, a beat

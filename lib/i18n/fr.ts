@@ -59,6 +59,7 @@ const fr: Dictionary = {
     facts: "Faits sur la PI",
     total: "au total",
     scrollDown: "Faire défiler",
+    reel: { play: "Lecture", pause: "Pause", soundOn: "Activer le son", soundOff: "Couper le son" },
   },
 
   hero: {
@@ -103,6 +104,12 @@ const fr: Dictionary = {
         body: "Exportez des rapports de PI détaillés, prêts pour les investisseurs : l’œuvre, les droits d’adaptation, la chaîne des droits et des comparables de marché.",
       },
     ],
+    tourLabel: "À voir — 46 secondes",
+    tourTitle: "La visite complète.",
+    tourBody:
+      "Toute grande adaptation commence par un livre. Cherchez-le, évaluez-le et obtenez le rapport : une, trois ou cinq pages.",
+    tourAlt:
+      "Reel Screendibs : une recherche de Frankenstein, son score d’adaptabilité de 94 sur 100 et les rapports d’une, trois et cinq pages.",
     whoIndex: "03 — Qui",
     whoStatement: ["Screendibs se situe à la", "croisée de la technologie, de la littérature et du divertissement."],
     whoPara:
