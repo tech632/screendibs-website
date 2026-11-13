@@ -106,7 +106,7 @@ const en = {
     ],
     /* The Reel under the steps. tourBody is the caption the Reel was posted
        with on Instagram. */
-    tourLabel: "Watch — 46 seconds",
+    tourLabel: "Watch",
     tourTitle: "The full tour.",
     tourBody:
       "Every great adaptation starts with a book. Search it, score it, and get the report: one, three or five pages.",

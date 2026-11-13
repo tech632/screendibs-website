@@ -104,7 +104,7 @@ const fr: Dictionary = {
         body: "Exportez des rapports de PI détaillés, prêts pour les investisseurs : l’œuvre, les droits d’adaptation, la chaîne des droits et des comparables de marché.",
       },
     ],
-    tourLabel: "À voir — 46 secondes",
+    tourLabel: "À voir",
     tourTitle: "La visite complète.",
     tourBody:
       "Toute grande adaptation commence par un livre. Cherchez-le, évaluez-le et obtenez le rapport : une, trois ou cinq pages.",
