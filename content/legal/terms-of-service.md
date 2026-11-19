@@ -172,9 +172,9 @@ If you are a rights holder and believe that information on the Service about you
 Prices are shown in **United States dollars (USD)** in the Service before you buy. The prices at the date of these Terms are:
 
 - **Free:** unlimited search, subject to fair use [ASSUMPTION: the app limits each account to about 4 searches per minute to stop automated use], details pages for public-domain works, and, during the free trial described in section 12, details pages for all works.
-- **One-off reports:** Scout Report $9.99; Deep Dive $18.99; Premium $199.99. [DECISION for John and Jon: the Premium one-off price was raised from $50 so that three Premium reports cost more than the Premium plan.]
-- **Title unlock:** $9.99 for the details page of one work that is not in the public domain. [ASSUMPTION: the app sells single unlocks only, with no unlock packs at launch. If confirmed, remove the references to packs and credits below.]
-- **Monthly plans:** Scout $24.99 per month; Deep Dive $54.99 per month; Premium $599 per month, arranged with us directly ("Contact us"). The reports and other features included in each plan are described on the pricing page at the time you subscribe.
+- **One-off reports:** Scout Report $9.99; Deep Dive $19.99; Premium Report $39.99.
+- **Title unlock:** $1.99 for the details page of one work that is not in the public domain. [ASSUMPTION: the app sells single unlocks only, with no unlock packs at launch. If confirmed, remove the references to packs and credits below.]
+- **Monthly plans:** Scout $24.99 per month; Deep Dive $54.99 per month; Premium $599.99 per month, arranged with us directly ("Contact us"). The reports and other features included in each plan are described on the pricing page at the time you subscribe.
 
 [DECISION for Jon: whether prices include or exclude taxes. ASSUMPTION drafted here: prices exclude applicable sales taxes (such as GST, HST, QST or VAT), which are added at checkout where we are required to collect them.]
 

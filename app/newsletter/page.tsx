@@ -19,10 +19,9 @@ export default async function NewsletterPage() {
   return (
     <main className="page nl-page">
       <section className="nl-top">
-        <p className="eyebrow">{n.eyebrow}</p>
-        <h1>
-          {latest ? `${n.weekOf} ${weekLabel(latest.week, locale)}` : n.title}
-        </h1>
+        {/* Nov 13 meeting: the masthead is the big title, the week a medium line under it. */}
+        <h1>{n.eyebrow}</h1>
+        {latest ? <p className="nl-date">{`${n.weekOf} ${weekLabel(latest.week, locale)}`}</p> : null}
         <p className="lede">{n.lede}</p>
         {n.englishOnly ? (
           <p className="note" lang="fr">

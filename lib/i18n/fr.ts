@@ -332,7 +332,7 @@ const fr: Dictionary = {
   newsletter: {
     eyebrow: "Infolettre Sd*",
     title: "Infolettre",
-    lede: "Quatre sujets par semaine sur les livres, les droits et les adaptations à l’écran. Un nouveau numéro chaque vendredi.",
+    lede: "Chaque semaine, des analyses et des histoires du secteur sur les livres, les droits et les adaptations à l’écran. Un nouveau numéro chaque vendredi.",
     weekOf: "Semaine du",
     latest: "Dernier numéro",
     archiveTitle: "Tous les numéros",

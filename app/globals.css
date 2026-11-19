@@ -1917,11 +1917,18 @@ main {
 }
 
 .nl-top h1 {
-  margin: 0 0 clamp(20px, 2.4vw, 32px);
+  margin: 0 0 clamp(12px, 1.4vw, 20px);
   font-size: var(--fs-display);
   font-weight: 300;
   line-height: 1;
   letter-spacing: -0.02em;
+}
+
+.nl-date {
+  margin: 0 0 clamp(20px, 2.4vw, 32px);
+  font-size: var(--fs-item);
+  font-weight: 500;
+  color: var(--ink-soft);
 }
 
 .nl-empty {

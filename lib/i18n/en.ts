@@ -338,7 +338,7 @@ const en = {
   newsletter: {
     eyebrow: "Sd* Newsletter",
     title: "Newsletter",
-    lede: "Four stories a week on books, rights and screen adaptations. A new issue every Friday.",
+    lede: "Industry insight and stories every week on books, rights and screen adaptations. A new issue every Friday.",
     weekOf: "Week of",
     latest: "Latest",
     archiveTitle: "All issues",
