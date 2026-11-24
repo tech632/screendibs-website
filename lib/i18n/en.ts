@@ -43,6 +43,7 @@ const en = {
     disclaimer: "Disclaimer",
     platform: "Platform",
     place: "Montreal, Canada.",
+    social: "Screendibs on {network}",
   },
 
   contactBlock: {

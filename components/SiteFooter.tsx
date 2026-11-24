@@ -1,5 +1,6 @@
 import Link from "next/link";
 import SdMark from "./SdMark";
+import SocialLinks from "./SocialLinks";
 import type { Dictionary } from "@/lib/i18n/en";
 
 /* At launch the platform takes over screendibs.com and this site moves under "Company". */
@@ -22,6 +23,7 @@ export default function SiteFooter({ t }: { t: Pick<Dictionary, "nav" | "footer"
         <Link href="/disclaimer">{t.footer.disclaimer}</Link>
         <a href={PLATFORM_URL}>{t.footer.platform}</a>
       </nav>
+      <SocialLinks label={(network) => t.footer.social.replace("{network}", network)} />
       <span>© Screendibs Technologies Inc. {new Date().getFullYear()}. {t.footer.place}</span>
     </footer>
   );

@@ -44,6 +44,7 @@ const fr: Dictionary = {
     disclaimer: "Avertissement",
     platform: "Plateforme",
     place: "Montréal, Canada.",
+    social: "Screendibs sur {network}",
   },
 
   contactBlock: {

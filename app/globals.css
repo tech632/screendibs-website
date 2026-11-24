@@ -1851,6 +1851,23 @@ main {
   color: var(--coral);
 }
 
+.footer-social {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.footer-social a {
+  display: inline-flex;
+  color: rgba(245, 245, 245, 0.62);
+  transition: color 0.2s ease;
+}
+
+.footer-social a:hover,
+.footer-social a:focus-visible {
+  color: var(--coral);
+}
+
 /* ------------------------------------------------------------------ grain --- */
 
 .grain {
