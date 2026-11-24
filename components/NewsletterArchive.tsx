@@ -1,11 +1,12 @@
 import Link from "next/link";
+import type { Locale } from "@/lib/i18n/languages";
 import { weekLabel, type Issue } from "@/lib/newsletter";
 import type { Dictionary } from "@/lib/i18n/en";
 
 interface Props {
   issues: Issue[];
   current?: string;
-  locale: "en" | "fr";
+  locale: Locale;
   t: Dictionary["newsletter"];
 }
 

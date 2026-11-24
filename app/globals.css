@@ -255,24 +255,48 @@ html.is-nav-dark .site-nav .btn:hover {
   opacity: 1;
 }
 
-.lang-toggle:disabled {
+.lang-toggle[data-pending] {
   cursor: progress;
   opacity: 0.4;
 }
 
-.lang-flag {
-  display: block;
-  width: 18px;
-  height: 12px;
-  border-radius: 2px;
-  overflow: hidden;
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.12);
+/* The native select sits invisibly over the pill, so the pill is what you
+   see and the browser's own menu is what you get. */
+.lang-toggle {
+  position: relative;
 }
 
-.lang-flag svg {
-  display: block;
+.lang-toggle select {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
+  opacity: 0;
+  cursor: pointer;
+  font: inherit;
+  font-size: 16px;
+}
+
+.lang-toggle:focus-within {
+  opacity: 1;
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
+.lang-chevron {
+  display: block;
+  opacity: 0.8;
+}
+
+/* Arabic: the layout stays left-to-right for now (decided 24 Nov 2026). */
+html[lang="ar"] body {
+  text-align: right;
+}
+
+/* Each block takes its direction from its own text, so Arabic punctuation
+   lands where Arabic readers expect it without flipping the layout. */
+html[lang="ar"] :is(h1, h2, h3, h4, p, li, blockquote, figcaption) {
+  unicode-bidi: plaintext;
 }
 
 html.is-nav-dark .lang-toggle {
@@ -284,9 +308,6 @@ html.is-nav-dark .lang-toggle {
 }
 
 @media (max-width: 620px) {
-  .lang-code {
-    display: none;
-  }
 
   .lang-toggle {
     padding: 4px;

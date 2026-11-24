@@ -6,9 +6,10 @@ import { useEffect } from "react";
 import SdMark from "./SdMark";
 import LangToggle from "./LangToggle";
 import type { Dictionary } from "@/lib/i18n/en";
+import type { Locale } from "@/lib/i18n/languages";
 
 interface Props {
-  locale: "en" | "fr";
+  locale: Locale;
   t: Pick<Dictionary, "nav" | "lang">;
 }
 
@@ -89,7 +90,7 @@ export default function SiteNav({ locale, t }: Props) {
           </Link>
         </li>
         <li>
-          <LangToggle locale={locale} label={t.lang.switchTo} code={t.lang.otherCode} />
+          <LangToggle locale={locale} label={t.lang.label} />
         </li>
       </ul>
     </nav>

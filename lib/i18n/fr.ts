@@ -33,8 +33,7 @@ const fr: Dictionary = {
   },
 
   lang: {
-    switchTo: "Switch to English",
-    otherCode: "EN",
+    label: "Langue",
   },
 
   footer: {

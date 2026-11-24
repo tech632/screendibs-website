@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Inter_Tight } from "next/font/google";
 import SiteFooter from "@/components/SiteFooter";
 import SiteNav from "@/components/SiteNav";
-import { getDictionary } from "@/lib/i18n";
+import { getDictionary, localeTag } from "@/lib/i18n";
 import "./globals.css";
 
 /* The site's one family. Only exposed as a variable: the corner mark is drawn
@@ -35,7 +35,7 @@ export default async function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   const { locale, t } = await getDictionary();
   return (
-    <html lang={locale} className={interTight.variable}>
+    <html lang={localeTag(locale)} className={interTight.variable}>
       <head>
         {/* The home page's intro locks scrolling and holds the chrome at
             opacity 0 until the canvas hands over. Without JS nothing ever hands

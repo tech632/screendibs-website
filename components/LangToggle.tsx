@@ -2,64 +2,46 @@
 
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
+import { LANGUAGES, type Locale } from "@/lib/i18n/languages";
 
 interface Props {
-  locale: "en" | "fr";
-  /** Accessible label, already in the language being switched *to*. */
+  locale: Locale;
+  /** Accessible label for the menu, in the current language ("Language", "Langue"…). */
   label: string;
-  /** Code of the language being switched to: "FR" or "EN". */
-  code: string;
 }
 
-/* Flags as inline SVG: emoji flags don't render on Windows. */
-const FrenchFlag = () => (
-  <svg viewBox="0 0 3 2" aria-hidden="true">
-    <rect width="1" height="2" fill="#002654" />
-    <rect x="1" width="1" height="2" fill="#fff" />
-    <rect x="2" width="1" height="2" fill="#CE1126" />
-  </svg>
-);
-
-const UkFlag = () => (
-  <svg viewBox="0 0 60 40" aria-hidden="true">
-    <clipPath id="uk-flag-clip">
-      <path d="M30,20 h30 v20 z v20 h-30 z h-30 v-20 z v-20 h30 z" />
-    </clipPath>
-    <rect width="60" height="40" fill="#012169" />
-    <path d="M0,0 L60,40 M60,0 L0,40" stroke="#fff" strokeWidth="8" />
-    <path d="M0,0 L60,40 M60,0 L0,40" clipPath="url(#uk-flag-clip)" stroke="#C8102E" strokeWidth="5" />
-    <path d="M30,0 v40 M0,20 h60" stroke="#fff" strokeWidth="12" />
-    <path d="M30,0 v40 M0,20 h60" stroke="#C8102E" strokeWidth="7" />
-  </svg>
-);
-
 /**
- * The language switch in the nav corner. Shows the language you'd switch
- * *to*; clicking stores the choice in the `lang` cookie for a year and
+ * The language menu in the nav corner: a native <select> dressed as the old
+ * pill (keyboard and screen-reader friendly), each language named in its own
+ * language. Choosing one stores it in the `lang` cookie for a year and
  * re-renders the current page on the server in that language.
  */
-export default function LangToggle({ locale, label, code }: Props) {
+export default function LangToggle({ locale, label }: Props) {
   const router = useRouter();
   const [pending, startTransition] = useTransition();
-  const next = locale === "en" ? "fr" : "en";
 
-  const onClick = () => {
+  const onChange = (next: string) => {
+    if (next === locale) return;
     document.cookie = `lang=${next}; path=/; max-age=31536000; samesite=lax`;
     startTransition(() => router.refresh());
   };
 
   return (
-    <button
-      type="button"
-      className="lang-toggle"
-      onClick={onClick}
-      aria-label={label}
-      title={label}
-      lang={next}
-      disabled={pending}
-    >
-      <span className="lang-flag">{next === "fr" ? <FrenchFlag /> : <UkFlag />}</span>
-      <span className="lang-code">{code}</span>
-    </button>
+    <label className="lang-toggle" title={label} data-pending={pending || undefined}>
+      <span className="sr-only">{label}</span>
+      <span className="lang-code" aria-hidden="true">
+        {locale.toUpperCase()}
+      </span>
+      <svg className="lang-chevron" viewBox="0 0 10 6" width="8" height="5" aria-hidden="true">
+        <path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" strokeWidth="1.5" />
+      </svg>
+      <select value={locale} onChange={(e) => onChange(e.target.value)} disabled={pending} aria-label={label}>
+        {LANGUAGES.map((l) => (
+          <option key={l.code} value={l.code} lang={l.tag}>
+            {l.name}
+          </option>
+        ))}
+      </select>
+    </label>
   );
 }

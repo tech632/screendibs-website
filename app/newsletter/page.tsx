@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import NewsletterArchive from "@/components/NewsletterArchive";
 import NewsletterIssue from "@/components/NewsletterIssue";
-import { getDictionary } from "@/lib/i18n";
+import { getDictionary, localeTag } from "@/lib/i18n";
 import { getIssues, weekLabel } from "@/lib/newsletter";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -24,7 +24,7 @@ export default async function NewsletterPage() {
         {latest ? <p className="nl-date">{`${n.weekOf} ${weekLabel(latest.week, locale)}`}</p> : null}
         <p className="lede">{n.lede}</p>
         {n.englishOnly ? (
-          <p className="note" lang="fr">
+          <p className="note" lang={localeTag(locale)}>
             {n.englishOnly}
           </p>
         ) : null}

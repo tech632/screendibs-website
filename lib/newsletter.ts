@@ -1,3 +1,4 @@
+import { localeTag, type Locale } from "./i18n/languages";
 import { readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 
@@ -114,9 +115,9 @@ export function getIssue(week: string): Issue | undefined {
 }
 
 /** "Nov 9, 2026" / "9 nov. 2026" — the issue is labelled "Week of …". */
-export function weekLabel(week: string, locale: "en" | "fr"): string {
+export function weekLabel(week: string, locale: Locale): string {
   const [y, m, d] = week.split("-").map(Number);
-  return new Intl.DateTimeFormat(locale === "fr" ? "fr-CA" : "en-US", {
+  return new Intl.DateTimeFormat(locale === "en" ? "en-US" : localeTag(locale), {
     month: "short",
     day: "numeric",
     year: "numeric",

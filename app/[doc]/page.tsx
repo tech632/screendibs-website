@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Fragment, type ReactNode } from "react";
-import { getDictionary } from "@/lib/i18n";
+import { getDictionary, localeTag } from "@/lib/i18n";
 
 /*
  * The legal pages. Text comes from documents/legal/ in the Screendibs repo (Jonathan Nuss's
@@ -88,7 +88,7 @@ export default async function LegalPage({ params }: { params: Promise<{ doc: str
   const { doc } = await params;
   if (!isDoc(doc)) notFound();
   const key = doc;
-  const { t } = await getDictionary();
+  const { locale, t } = await getDictionary();
 
   return (
     <main className="page legal-page">
@@ -105,7 +105,7 @@ export default async function LegalPage({ params }: { params: Promise<{ doc: str
         ))}
       </nav>
       {t.legal.englishOnly ? (
-        <p className="note legal-lang-note" lang="fr">
+        <p className="note legal-lang-note" lang={localeTag(locale)}>
           {t.legal.englishOnly}
         </p>
       ) : null}

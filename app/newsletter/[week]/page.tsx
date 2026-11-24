@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import NewsletterArchive from "@/components/NewsletterArchive";
 import NewsletterIssue from "@/components/NewsletterIssue";
-import { getDictionary } from "@/lib/i18n";
+import { getDictionary, localeTag } from "@/lib/i18n";
 import { getAllIssues, getIssue, getIssues, weekLabel } from "@/lib/newsletter";
 
 export const dynamicParams = false;
@@ -50,7 +50,7 @@ export default async function NewsletterIssuePage({
           {n.weekOf} {weekLabel(issue.week, locale)}
         </h1>
         {n.englishOnly ? (
-          <p className="note" lang="fr">
+          <p className="note" lang={localeTag(locale)}>
             {n.englishOnly}
           </p>
         ) : null}

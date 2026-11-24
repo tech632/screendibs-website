@@ -32,8 +32,7 @@ const en = {
   },
 
   lang: {
-    switchTo: "Passer en français",
-    otherCode: "FR",
+    label: "Language",
   },
 
   footer: {
