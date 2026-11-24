@@ -35,7 +35,7 @@ export default async function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   const { locale, t } = await getDictionary();
   return (
-    <html lang={localeTag(locale)} className={interTight.variable}>
+    <html lang={localeTag(locale)} dir={locale === "ar" ? "rtl" : "ltr"} className={interTight.variable}>
       <head>
         {/* The home page's intro locks scrolling and holds the chrome at
             opacity 0 until the canvas hands over. Without JS nothing ever hands
