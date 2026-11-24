@@ -1,4 +1,4 @@
-/* Screendibs on LinkedIn and Instagram, as icon links (footer). Same marks as the app's. */
+/* Screendibs on LinkedIn and Instagram, as icon links (nav and footer). Same marks as the app's. */
 
 const LINKS = [
   {
@@ -16,12 +16,20 @@ const LINKS = [
 ];
 
 /** `label` turns a network name into the link's accessible name, e.g. "Screendibs on LinkedIn". */
-export default function SocialLinks({ label }: { label: (network: string) => string }) {
+export default function SocialLinks({
+  label,
+  className = "footer-social",
+  size = 18,
+}: {
+  label: (network: string) => string;
+  className?: string;
+  size?: number;
+}) {
   return (
-    <span className="footer-social">
+    <span className={className}>
       {LINKS.map(({ id, name, href, d }) => (
         <a key={id} href={href} target="_blank" rel="noopener noreferrer" aria-label={label(name)} title={label(name)}>
-          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width={size} height={size} fill="currentColor" aria-hidden="true">
             <path d={d} />
           </svg>
         </a>

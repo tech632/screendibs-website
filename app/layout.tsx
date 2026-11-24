@@ -50,7 +50,7 @@ export default async function RootLayout({
         </noscript>
       </head>
       <body>
-        <SiteNav locale={locale} t={{ nav: t.nav, lang: t.lang }} />
+        <SiteNav locale={locale} t={{ nav: t.nav, lang: t.lang, social: t.footer.social }} />
         {children}
         <SiteFooter t={{ nav: t.nav, footer: t.footer }} />
         <div className="grain" aria-hidden="true" />

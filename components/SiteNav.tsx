@@ -5,12 +5,13 @@ import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 import SdMark from "./SdMark";
 import LangToggle from "./LangToggle";
+import SocialLinks from "./SocialLinks";
 import type { Dictionary } from "@/lib/i18n/en";
 import type { Locale } from "@/lib/i18n/languages";
 
 interface Props {
   locale: Locale;
-  t: Pick<Dictionary, "nav" | "lang">;
+  t: Pick<Dictionary, "nav" | "lang"> & { social: string };
 }
 
 export default function SiteNav({ locale, t }: Props) {
@@ -81,6 +82,13 @@ export default function SiteNav({ locale, t }: Props) {
             </Link>
           </li>
         ))}
+        <li className="nav-social">
+          <SocialLinks
+            className="nav-social-links"
+            size={16}
+            label={(network) => t.social.replace("{network}", network)}
+          />
+        </li>
         <li>
           <Link
             className={`btn btn-sm${pathname === "/contact" ? " is-current" : ""}`}
